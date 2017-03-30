@@ -1,0 +1,45 @@
+Portfolio Summary Report
+===============================================================================================================================
+Portfolio  Owner                Manager                       Fees     Commisions  Weighted Risk         Return          Total
+PT001      Broker, Steve        Broker, Steve        $       10.00  $        2.51         0.0000  $       50.13  $    10000.00
+PPP        Olson, Olimar        Broker, Adam         $        0.00  $        0.00         0.0000  $        0.00  $        0.00
+PT002      Waurick, Timothy     Broker, Adam         $      100.00  $      256.05         1.1764  $    12802.50  $   201250.00
+                                                     -------------------------------------------------------------------------
+                                              Totals $      110.00  $      258.56                 $    12852.63  $   211250.00
+
+
+											  
+Portfolio Details
+================================================================================================================
+Portfolio PT001
+------------------------------------------
+Owner:          Broker, Steve
+Manager:        Broker, Steve
+Beneficiary:    Broker, Sonni
+Assets 
+Code       Asset                           Return Rate          Risk  Annual Return          Value
+DEP        Super Savings                         0.50%          0.00  $       50.13  $    10000.00
+                                                        --------------------------------------------
+                                                Totals        0.0000  $       50.13  $    10000.00
+
+
+Portfolio PPP
+------------------------------------------
+Owner:          Olson, Olimar 
+Manager:        Broker, Adam
+Beneficiary:    Broker, Adam 
+Assets 
+Code       Asset                           Return Rate          Risk  Annual Return          Value
+                                                        --------------------------------------------
+                                                Totals        0.0000  $        0.00  $        0.00
+												
+Portfolio PT002
+------------------------------------------
+Owner:          Waurick, Timothy 
+Manager:        Broker, Adam
+Assets 
+Code       Asset                           Return Rate          Risk  Annual Return          Value
+STK        Chicken Stock Stocks                 76.20%         -0.42  $      952.50  $     1250.00
+KTS        Personal Investments Inc.             5.93%          1.18  $    11850.00  $   200000.00
+                                                        --------------------------------------------
+                                                Totals        1.1764  $    12802.50  $   201250.00

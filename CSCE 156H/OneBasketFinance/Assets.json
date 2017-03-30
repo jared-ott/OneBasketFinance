@@ -1,0 +1,13 @@
+{
+"assets": [ {
+  "code": "assetCode",
+  "label": "genericLabel",
+  "type" : "S",
+  "baseRateOfReturn": 20,
+  "quarterlyDividend": 1000,
+  "sharePrice": 12.34,
+  "symbol": "ARK",
+  "beta": 1.234
+  }
+]
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>	
+	<asset>
+		<stock>
+			<quDividend> 1000 </quDividend>
+			<retRate> 20 </retRate>
+			<betaMeas> 1.234 </betaMeas>
+			<stockSymb> ARK </stockSymb>
+			<sharePrice> 12.34 </sharePrice>
+			<code> assetCode </code>
+			<label> genericLabel </label>
+		</stock>
+	</asset>
+</config>

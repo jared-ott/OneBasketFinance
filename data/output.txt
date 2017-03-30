@@ -1,0 +1,141 @@
+Portfolio Summary Report
+===============================================================================================================================
+Portfolio  Owner                Manager                       Fees     Commisions  Weighted Risk         Return          Total
+PD102      Baker, C.            Fox, Bud             $      100.00  $     1432.63         1.0962  $    71631.25  $   544375.00
+PF007      Baker, Tom           Baker, Tom           $       40.00  $    18851.24         1.1576  $   377024.79  $  2879363.50
+PT001      Castro, Starlin      Gekko, Gordon        $       30.00  $      269.51         0.2578  $     5390.28  $    42203.78
+PF200      Hurndall, Richard    Eccleston, Chris     $        0.00  $        0.00         0.0000  $        0.00  $        0.00
+PF006      McCoy, Sylvester     Baker, Tom           $        0.00  $        0.00         0.0000  $        0.00  $        0.00
+PF300      McCoy, Sylvester     Hurndall, Richard    $      300.00  $     3476.55         0.7745  $   173827.33  $  1948104.05
+PF001      O'Brien, Miles       Gekko, Gordon        $       20.00  $      404.68         0.2897  $     8093.54  $   112516.32
+PF002      Smith, Matt          Baker, Tom           $       10.00  $       29.42         0.6800  $      588.37  $     1047.54
+PF003      Tennant, David       Baker, Tom           $       10.00  $        0.46         1.2800  $        9.29  $      743.40
+PF004      Tennant, David       Hurndall, Richard    $       50.00  $        0.71         0.0000  $       35.70  $     1032.12
+                                                     -------------------------------------------------------------------------
+                                              Totals $      560.00  $    24465.20                 $   636600.54  $  5529385.71
+
+
+
+Portfolio Details
+================================================================================================================
+Portfolio PD102
+------------------------------------------
+Owner:          Baker, C.
+Manager:        Fox, Bud
+Beneficiary:    Gekko, Gordon
+Assets 
+Code       Asset                           Return Rate          Risk  Annual Return          Value
+RENT445    Rental Property                       8.25%          0.58  $     9900.00  $   120000.00
+FOOD12     Cluckin's restaurant chain           14.55%          1.24  $    61731.25  $   424375.00
+                                                        --------------------------------------------
+                                                Totals        1.0962  $    71631.25  $   544375.00
+
+Portfolio PF007
+------------------------------------------
+Owner:          Baker, Tom
+Manager:        Baker, Tom
+Beneficiary:    Ehrmantraut, Kaylee
+Assets 
+Code       Asset                           Return Rate          Risk  Annual Return          Value
+REALStr12  Fred's Fabulous Hardware Store       10.31%          0.29  $      671.51  $     6516.00
+321CC      Coca-Cola                            56.17%          0.68  $   230734.80  $   410800.00
+CMPROP0121 Commercial Property-Red Oaks Mall        5.89%          1.24  $   144843.66  $  2457160.00
+wOOWoo1S   Canadian National Railway            15.85%          0.79  $      774.83  $     4887.50
+                                                        --------------------------------------------
+                                                Totals        1.1576  $   377024.79  $  2879363.50
+
+Portfolio PT001
+------------------------------------------
+Owner:          Castro, Starlin
+Manager:        Gekko, Gordon
+Beneficiary:    Sveum, Dale
+Assets 
+Code       Asset                           Return Rate          Risk  Annual Return          Value
+B0oWM      Costco                               39.94%          0.82  $     5298.49  $    13266.25
+BX001-23   Money Market Savings                  1.06%          0.00  $       25.37  $     2403.32
+AGTSAV     Savings Account                       0.25%          0.00  $       66.42  $    26534.21
+                                                        --------------------------------------------
+                                                Totals        0.2578  $     5390.28  $    42203.78
+
+Portfolio PF200
+------------------------------------------
+Owner:          Hurndall, Richard
+Manager:        Eccleston, Chris
+Beneficiary:    Ehrmantraut, Kaylee
+Assets 
+Code       Asset                           Return Rate          Risk  Annual Return          Value
+                                                        --------------------------------------------
+                                                Totals        0.0000  $        0.00  $        0.00
+
+Portfolio PF006
+------------------------------------------
+Owner:          McCoy, Sylvester
+Manager:        Baker, Tom
+Beneficiary:    none
+Assets 
+Code       Asset                           Return Rate          Risk  Annual Return          Value
+                                                        --------------------------------------------
+                                                Totals        0.0000  $        0.00  $        0.00
+
+Portfolio PF300
+------------------------------------------
+Owner:          McCoy, Sylvester
+Manager:        Hurndall, Richard
+Beneficiary:    none
+Assets 
+Code       Asset                           Return Rate          Risk  Annual Return          Value
+123APP     Apple                                27.10%          1.25  $   116481.40  $   429800.00
+RIRA01     Roth IRA                              3.46%          0.00  $     4150.15  $   120000.00
+RSTOR322   7" Vinyl Records                     74.79%          0.54  $    10096.34  $    13500.00
+IND321     Industrial Widget Manufacturers Inc.        3.00%          0.83  $    31566.67  $  1053333.25
+GOOG001    Google Inc.                           5.60%          1.15  $     4562.36  $    81470.80
+CD1Y3X     1-year Rollover CD                    2.79%          0.00  $     6970.40  $   250000.00
+                                                        --------------------------------------------
+                                                Totals        0.7745  $   173827.33  $  1948104.05
+
+Portfolio PF001
+------------------------------------------
+Owner:          O'Brien, Miles
+Manager:        Gekko, Gordon
+Beneficiary:    none
+Assets 
+Code       Asset                           Return Rate          Risk  Annual Return          Value
+BERK-B     Berkshire Hathaway                    7.20%          0.29  $     8092.22  $   112392.00
+BX001-23   Money Market Savings                  1.06%          0.00  $        1.31  $      124.32
+                                                        --------------------------------------------
+                                                Totals        0.2897  $     8093.54  $   112516.32
+
+Portfolio PF002
+------------------------------------------
+Owner:          Smith, Matt
+Manager:        Baker, Tom
+Beneficiary:    McCoy, Sylvester
+Assets 
+Code       Asset                           Return Rate          Risk  Annual Return          Value
+321CC      Coca-Cola                            56.17%          0.68  $      588.37  $     1047.54
+                                                        --------------------------------------------
+                                                Totals        0.6800  $      588.37  $     1047.54
+
+Portfolio PF003
+------------------------------------------
+Owner:          Tennant, David
+Manager:        Baker, Tom
+Beneficiary:    McCoy, Sylvester
+Assets 
+Code       Asset                           Return Rate          Risk  Annual Return          Value
+N0TPIX     3D Systems                            1.25%          1.28  $        9.29  $      743.40
+                                                        --------------------------------------------
+                                                Totals        1.2800  $        9.29  $      743.40
+
+Portfolio PF004
+------------------------------------------
+Owner:          Tennant, David
+Manager:        Hurndall, Richard
+Beneficiary:    Ehrmantraut, Kaylee
+Assets 
+Code       Asset                           Return Rate          Risk  Annual Return          Value
+RIRA01     Roth IRA                              3.46%          0.00  $       35.70  $     1032.12
+                                                        --------------------------------------------
+                                                Totals        0.0000  $       35.70  $     1032.12
+
+

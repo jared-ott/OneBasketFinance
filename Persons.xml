@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<person>
+		<code> personCode </code>
+		<firstName> Ryan </firstName>
+		<lastName> Wallace </lastName>
+		<address>
+			<street> 168th Street </street>
+			<city> Omaha </city>
+			<state> Nebraska </state>
+			<zip> 68136 </zip>
+			<country> USA </country>
+		</address> 
+		<email> ryan@email.com </email>
+		<brokStatus>
+			<stat> E </stat>
+			<id> SEC12345 </id>
+		</brokStatus>
+	</person>
+	<person>
+		<code> personCode </code>
+		<firstName> Chris </firstName>
+		<lastName> Bourke </lastName>
+		<address>
+			<street> 123rd Street </street>
+			<city> Lincoln </city>
+			<state> Nebraska </state>
+			<zip> 68555 </zip>
+			<country> USA </country>
+		</address> 
+		<email></email>
+		<brokStatus></brokStatus>
+	</person>
+</config>

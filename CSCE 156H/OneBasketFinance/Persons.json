@@ -1,0 +1,33 @@
+{
+"persons": [ 
+  {
+    "code": "personCode",
+	"secID": "SEC12345",
+	"type": "E",
+    "firstName": "Ryan",
+    "lastName": "Wallace",
+    "address": {
+      "street": "168th Street",
+      "city": "Omaha",
+      "state": "Nebraska",
+	  "zip" : "68136",
+	  "country": "USA"
+    },
+	"emails": [
+	  "ryan@email.com"
+	]
+  },
+  {
+    "code": "personCode",
+    "firstName": "Chris",
+    "lastName": "Bourke",
+    "address": {
+      "street": "123rd Street",
+      "city": "Lincoln",
+      "state": "Nebraska",
+	  "zip" : "68555",
+	  "country": "USA"
+    },
+	"emails": []
+  },
+]}

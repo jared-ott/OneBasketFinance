@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding = "UTF-8" ?>
+<assets>
+  <asset>
+    <label>Savings Account</label>
+    <code>AGTSAV</code>
+    <apr>0.25</apr>
+    <type>D</type>
+    <rateOfReturn>0.25031276057951857</rateOfReturn>
+  </asset>
+  <asset>
+    <label>Money Market Savings</label>
+    <code>BX001-23</code>
+    <apr>1.05</apr>
+    <type>D</type>
+    <rateOfReturn>1.055531844502644</rateOfReturn>
+  </asset>
+  <asset>
+    <label>5-year CD</label>
+    <code>CD99312</code>
+    <apr>4.35</apr>
+    <type>D</type>
+    <rateOfReturn>4.445999431202607</rateOfReturn>
+  </asset>
+  <asset>
+    <label>Online Savings A+</label>
+    <code>SAVE01</code>
+    <apr>1.9</apr>
+    <type>D</type>
+    <rateOfReturn>1.918164861740812</rateOfReturn>
+  </asset>
+  <asset>
+    <label>1-year Rollover CD</label>
+    <code>CD1Y3X</code>
+    <apr>2.75</apr>
+    <type>D</type>
+    <rateOfReturn>2.7881615107252733</rateOfReturn>
+  </asset>
+  <asset>
+    <label>Roth IRA</label>
+    <code>RIRA01</code>
+    <apr>3.4</apr>
+    <type>D</type>
+    <rateOfReturn>3.4584606728117917</rateOfReturn>
+  </asset>
+  <asset>
+    <label>Google Inc.</label>
+    <code>GOOG001</code>
+    <quarterlyDividend>0.0</quarterlyDividend>
+    <beta>1.15</beta>
+    <stockSymbol>GOOG</stockSymbol>
+    <sharePrice>814.708</sharePrice>
+    <type>S</type>
+    <rateOfReturn>5.6</rateOfReturn>
+  </asset>
+  <asset>
+    <label>Diageo PLC</label>
+    <code>DIAGEO12</code>
+    <quarterlyDividend>12.0</quarterlyDividend>
+    <beta>1.04</beta>
+    <stockSymbol>DEO</stockSymbol>
+    <sharePrice>122.75</sharePrice>
+    <type>S</type>
+    <rateOfReturn>3.2</rateOfReturn>
+  </asset>
+  <asset>
+    <label>Apple</label>
+    <code>123APP</code>
+    <quarterlyDividend>24.5</quarterlyDividend>
+    <beta>1.25</beta>
+    <stockSymbol>AAPL</stockSymbol>
+    <sharePrice>429.8</sharePrice>
+    <type>S</type>
+    <rateOfReturn>4.3</rateOfReturn>
+  </asset>
+  <asset>
+    <label>Coca-Cola</label>
+    <code>321CC</code>
+    <quarterlyDividend>5.45</quarterlyDividend>
+    <beta>0.68</beta>
+    <stockSymbol>KO</stockSymbol>
+    <sharePrice>41.08</sharePrice>
+    <type>S</type>
+    <rateOfReturn>3.1</rateOfReturn>
+  </asset>
+  <asset>
+    <label>Chipotle Mexican Grill</label>
+    <code>No1BURR</code>
+    <quarterlyDividend>45.57</quarterlyDividend>
+    <beta>0.94</beta>
+    <stockSymbol>CMG</stockSymbol>
+    <sharePrice>341.91</sharePrice>
+    <type>S</type>
+    <rateOfReturn>3.19</rateOfReturn>
+  </asset>
+  <asset>
+    <label>Costco</label>
+    <code>B0oWM</code>
+    <quarterlyDividend>10.0</quarterlyDividend>
+    <beta>0.82</beta>
+    <stockSymbol>COST</stockSymbol>
+    <sharePrice>106.13</sharePrice>
+    <type>S</type>
+    <rateOfReturn>2.25</rateOfReturn>
+  </asset>
+  <asset>
+    <label>3D Systems</label>
+    <code>N0TPIX</code>
+    <quarterlyDividend>0.0</quarterlyDividend>
+    <beta>1.28</beta>
+    <stockSymbol>DDD</stockSymbol>
+    <sharePrice>35.4</sharePrice>
+    <type>S</type>
+    <rateOfReturn>1.25</rateOfReturn>
+  </asset>
+  <asset>
+    <label>Canadian National Railway</label>
+    <code>wOOWoo1S</code>
+    <quarterlyDividend>2.75</quarterlyDividend>
+    <beta>0.79</beta>
+    <stockSymbol>CNI</stockSymbol>
+    <sharePrice>97.75</sharePrice>
+    <type>S</type>
+    <rateOfReturn>4.6</rateOfReturn>
+  </asset>
+  <asset>
+    <label>Berkshire Hathaway</label>
+    <code>BERK-B</code>
+    <quarterlyDividend>0.0</quarterlyDividend>
+    <beta>0.29</beta>
+    <stockSymbol>BRK-B</stockSymbol>
+    <sharePrice>107.04</sharePrice>
+    <type>S</type>
+    <rateOfReturn>7.2</rateOfReturn>
+  </asset>
+  <asset>
+    <label>Rental Property</label>
+    <code>RENT445</code>
+    <quarterlyDividend>2400.0</quarterlyDividend>
+    <rateOfReturn>0.25</rateOfReturn>
+    <omega>0.15</omega>
+    <totalValue>120000.0</totalValue>
+    <type>P</type>
+  </asset>
+  <asset>
+    <label>Commercial Property-Red Oaks Mall</label>
+    <code>CMPROP0121</code>
+    <quarterlyDividend>14240.0</quarterlyDividend>
+    <rateOfReturn>5.35</rateOfReturn>
+    <omega>0.25</omega>
+    <totalValue>1.0456E7</totalValue>
+    <type>P</type>
+  </asset>
+  <asset>
+    <label>Cluckin's restaurant chain</label>
+    <code>FOOD12</code>
+    <quarterlyDividend>35000.0</quarterlyDividend>
+    <rateOfReturn>3.0</rateOfReturn>
+    <omega>0.32</omega>
+    <totalValue>1212500.0</totalValue>
+    <type>P</type>
+  </asset>
+  <asset>
+    <label>Fred's Fabulous Hardware Store</label>
+    <code>REALStr12</code>
+    <quarterlyDividend>1232.0</quarterlyDividend>
+    <rateOfReturn>1.23</rateOfReturn>
+    <omega>0.13</omega>
+    <totalValue>54300.0</totalValue>
+    <type>P</type>
+  </asset>
+  <asset>
+    <label>Industrial Widget Manufacturers Inc.</label>
+    <code>IND321</code>
+    <quarterlyDividend>10500.0</quarterlyDividend>
+    <rateOfReturn>2.0</rateOfReturn>
+    <omega>-0.15</omega>
+    <totalValue>4213333.0</totalValue>
+    <type>P</type>
+  </asset>
+  <asset>
+    <label>7" Vinyl Records</label>
+    <code>RSTOR322</code>
+    <quarterlyDividend>2453.21</quarterlyDividend>
+    <rateOfReturn>2.1</rateOfReturn>
+    <omega>0.54</omega>
+    <totalValue>13500.0</totalValue>
+    <type>P</type>
+  </asset>
+</assets>
+
