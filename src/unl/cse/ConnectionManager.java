@@ -41,6 +41,17 @@ public class ConnectionManager {
 		return conn;
 	}
 	
+	public ResultSet getObjects(PreparedStatement ps){
+		ResultSet rs = null;
+		try {
+			rs = ps.executeQuery();
+		} catch (SQLException e) {
+			// TODO LOG ERROR
+			e.printStackTrace();
+		}
+		return rs;
+	}
+	
 	public void closeAll(Connection conn, PreparedStatement ps){
 		this.closeAll(conn, ps, null);
 	}

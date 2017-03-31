@@ -10,6 +10,8 @@ package unl.cse;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -360,6 +362,86 @@ public class Driver {
 		s.close();
 		
 		return output;
+	}
+	
+	//rs is a left join from Person to BrokerStatus
+	public static ArrayList<Person> readPersons(ResultSet rs){
+		String code;
+		String firstName;
+		String lastName;
+		Address address;
+		ArrayList<String> emails;
+		String secID;
+		BrokerType type;
+		
+		ArrayList<Person> persons = new ArrayList<Person>();
+		
+		try {
+			while (rs.next()){
+				code = "PS" + Integer.toString(rs.getInt("personId"));
+				firstName = rs.getString("firstName");
+				lastName = rs.getString("lastName");
+				//TODO: Address and emails. Subquery?
+				
+				if (rs.getString("secId") != null){
+					secID = rs.getString("secId");
+					if ("E" == rs.getString("brokerType")){
+						type = BrokerType.EXPERT;
+					} else {
+						type = BrokerType.JUNIOR;
+					}
+				persons.add(new Broker(code, lastName, firstName, address, emails, secID, type));
+				}
+			}
+		} catch (SQLException e) {
+			//TODO LOG ERROR
+			e.printStackTrace();
+		}
+		return persons;
+	}
+	
+	public static ArrayList<Asset> readAssets(ResultSet rs){
+		String label;
+		String code;
+		String type;
+		double apr;
+		double quarterlyDividend;
+		double baseRateOfReturn;
+		double risk;
+		String stockSymbol;
+		double sharePrice;
+		double value;
+		
+		ArrayList<Asset> assets = new ArrayList<Asset>();
+		try {
+			while (rs.next()){
+				code = "AST" + Integer.toString(rs.getInt("assetId"));
+				label = rs.getString("label");
+				type = rs.getString("assetType");
+				
+				if (type == "D"){
+					apr = rs.getDouble("apr");
+					assets.add(new DepositAccount(label, code, apr));
+				} else {
+					quarterlyDividend = rs.getDouble("quarterlyDividend");
+					baseRateOfReturn = rs.getDouble("rateOfReturn");
+					risk = rs.getDouble("risk");
+					value = rs.getDouble("value");
+				
+					if (type == "S"){
+						stockSymbol = rs.getString("symbol");
+						assets.add(new Stock(label, code, quarterlyDividend, baseRateOfReturn, risk, stockSymbol, value));
+					} else {
+						assets.add(new PrivateInvestment(label, code, quarterlyDividend, baseRateOfReturn, risk, value));
+					}
+				}
+			}
+		} catch (SQLException e) {
+			// TODO LOG ERROR
+			e.printStackTrace();
+		}
+		
+		return assets;
 	}
 	
 }
