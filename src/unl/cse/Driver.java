@@ -27,20 +27,35 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 public class Driver {
 	// Main driver
 	public static void main(String args[]) {
-		ArrayList<String> personsList = processFile("data/Persons.dat");
-		ArrayList<String> assetsList = processFile("data/Assets.dat");
-		ArrayList<String> portfoliosList = processFile("data/Portfolios.dat");
-		
-		ArrayList<Person> persons = createPersons(personsList);	
-		ArrayList<Asset> assets = createAssets(assetsList);
-		ArrayList<Portfolio> portfolios = createPortfolios(portfoliosList, persons, assets);
-		
+//		ArrayList<String> personsList = processFile("data/Persons.dat");
+//		ArrayList<String> assetsList = processFile("data/Assets.dat");
+//		ArrayList<String> portfoliosList = processFile("data/Portfolios.dat");
+//		
+//		ArrayList<Person> persons = createPersons(personsList);	
+//		ArrayList<Asset> assets = createAssets(assetsList);
+//		ArrayList<Portfolio> portfolios = createPortfolios(portfoliosList, persons, assets);
+//		
 //		createXML(persons, "person");
 //		createXML(assets, "asset");
 //		createJSON(persons, "persons");
 //		createJSON(assets, "assets");
 		
-		printSummary(portfolios);
+		ConnectionManager cm = new ConnectionManager();
+		Connection conn = cm.getConnection();
+		String query;
+		PreparedStatement ps;
+		ResultSet rs;
+		
+		query = "SELECT p.personId, p.lastName, p.firstName, p.addressId, b.secId, b.brokerType " 
+				+ "FROM Person p "
+				+ "LEFT JOIN BrokerStatus b ON b.personId = p.personId";
+		
+		ps = cm.prepareStatement(conn, query);
+		rs = cm.getObjects(ps);
+		ArrayList<Person> persons = readPersons(rs);
+		
+		persons.toString();
+		//printSummary(portfolios);
 		
 	}
 	
@@ -380,26 +395,39 @@ public class Driver {
 		
 		try {
 			while (rs.next()){
-				code = "PS" + Integer.toString(rs.getInt("personId"));
-				firstName = rs.getString("firstName");
-				lastName = rs.getString("lastName");
+				code = "PS" + Integer.toString(rs.getInt("p.personId"));
+				firstName = rs.getString("p.firstName");
+				lastName = rs.getString("p.lastName");
 				
 				ConnectionManager cm = new ConnectionManager();
 				Connection conn = cm.getConnection();
-				String query = "";
+				String query = "SELECT e.address FROM Person p "
+						+ "LEFT JOIN PersonEmail pe ON pe.personId = p.personId "
+						+ "LEFT JOIN Email e ON e.emailId = pe.emailId "
+						+ "WHERE p.personId = ?";
 				PreparedStatement ps = cm.prepareStatement(conn, query);
+				ps.setInt(1, rs.getInt("p.personId"));
 				ResultSet rs2 = ps.executeQuery();
 				
 				while (rs2.next()){
 					emails.add(rs2.getString("e.address"));
 				}
 				
-				query = "";
+				query = "SELECT a.streetAddress, "
+			     + "a.zipCode, "
+			     + "a.city, "
+			     + "s.name, "
+			     + "c.name "
+                 + "FROM Address a "
+                 + "LEFT JOIN State s ON s.stateId = a.stateId "
+                 + "LEFT JOIN Country c ON c.countryId = s.countryId "
+                 + "WHERE a.addressId = ?";
 				ps = cm.prepareStatement(conn, query);
+				ps.setInt(1, rs.getInt("p.addressId"));
 				rs2 = ps.executeQuery();
 				
 				rs2.next();
-				String streetAddress = rs2.getString("address");
+				String streetAddress = rs2.getString("a.streetAddress");
 				String zipCode = rs2.getString("a.zipCode");
 				String city = rs2.getString("a.city");
 				String state = rs2.getString("s.name");
@@ -407,9 +435,9 @@ public class Driver {
 				
 				address = new Address(streetAddress, city, state, zipCode, country);
 				
-				if (rs.getString("secId") != null){
-					secID = rs.getString("secId");
-					if ("E" == rs.getString("brokerType")){
+				if (rs.getString("b.secId") != null){
+					secID = rs.getString("b.secId");
+					if ("E" == rs.getString("b.brokerType")){
 						type = BrokerType.EXPERT;
 					} else {
 						type = BrokerType.JUNIOR;

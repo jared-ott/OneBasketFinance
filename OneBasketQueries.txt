@@ -1,0 +1,46 @@
+SELECT brokerType,
+       secId,
+       personId
+	FROM BrokerStatus;
+
+SELECT personId,
+	  lastName,
+       firstName
+	FROM Person;
+    
+SELECT a.streetAddress,
+       a.zipCode,
+       a.city,
+       s.name,
+       c.name
+	FROM Address a
+    LEFT JOIN State s ON s.stateId = a.stateId
+    LEFT JOIN Country c ON c.countryId = s.countryId;
+    
+SELECT e.address FROM Person p
+    LEFT JOIN PersonEmail pe ON pe.personId = p.personId
+    LEFT JOIN Email e ON e.emailId = pe.emailId
+    WHERE p.personId = 5;
+    
+SELECT portfolioId,
+	  ownerId,
+       brokerId,
+       beneficiaryId
+	FROM Portfolio;
+    
+SELECT ap.number,
+	  a.assetId
+       FROM AssetPortfolio ap
+       LEFT JOIN Asset a ON a.assetId = ap.assetId
+       WHERE ap.portfolioId = 3;
+       
+SELECT assetId,
+	  assetType,
+       apr,
+       label,
+       quarterlyDividend,
+       rateOfReturn,
+       risk,
+       symbol,
+       `value`
+	FROM Asset;
