@@ -54,8 +54,21 @@ public class Driver {
 		rs = cm.getObjects(ps);
 		ArrayList<Person> persons = readPersons(rs);
 		
-		persons.toString();
-		//printSummary(portfolios);
+		query = "SELECT assetId, assetType, apr, label, "
+				+ "quarterlyDividend, rateOfReturn, risk, symbol, `value` "
+				+ "FROM Asset";
+		ps = cm.prepareStatement(conn, query);
+		rs = cm.getObjects(ps);
+		ArrayList<Asset> assets = readAssets(rs);
+		
+		query = "SELECT portfolioId, ownerId, brokerId, beneficiaryId "
+				+ "FROM Portfolio";
+		ps = cm.prepareStatement(conn, query);
+		rs = cm.getObjects(ps);
+		ArrayList<Portfolio> portfolios = readPortfolios(rs, persons, assets);
+		
+		cm.closeAll(conn, ps, rs);
+		printSummary(portfolios);
 		
 	}
 	
@@ -433,11 +446,12 @@ public class Driver {
 				String state = rs2.getString("s.name");
 				String country = rs2.getString("c.name");
 				
+				cm.closeAll(conn, ps, rs2);
 				address = new Address(streetAddress, city, state, zipCode, country);
 				
 				if (rs.getString("b.secId") != null){
 					secID = rs.getString("b.secId");
-					if ("E" == rs.getString("b.brokerType")){
+					if ("E".equals(rs.getString("b.brokerType"))){
 						type = BrokerType.EXPERT;
 					} else {
 						type = BrokerType.JUNIOR;
@@ -446,6 +460,7 @@ public class Driver {
 				} else {
 					persons.add(new Person(code, lastName, firstName, address, emails));
 				}
+				
 			}
 		} catch (SQLException e) {
 			//TODO LOG ERROR
@@ -473,7 +488,7 @@ public class Driver {
 				label = rs.getString("label");
 				type = rs.getString("assetType");
 				
-				if (type == "D"){
+				if (type.equals("D")){
 					apr = rs.getDouble("apr");
 					assets.add(new DepositAccount(label, code, apr));
 				} else {
@@ -482,7 +497,7 @@ public class Driver {
 					risk = rs.getDouble("risk");
 					value = rs.getDouble("value");
 				
-					if (type == "S"){
+					if (type.equals("S")){
 						stockSymbol = rs.getString("symbol");
 						assets.add(new Stock(label, code, quarterlyDividend, baseRateOfReturn, risk, stockSymbol, value));
 					} else {
@@ -494,7 +509,6 @@ public class Driver {
 			// TODO LOG ERROR
 			e.printStackTrace();
 		}
-		
 		return assets;
 	}
 	
@@ -518,7 +532,7 @@ public class Driver {
 		
 		Map<Integer, Asset> assetKeys = new HashMap<Integer, Asset>();
 		for (Asset a : assets){
-			keyId = Integer.parseInt(a.code.substring(2));
+			keyId = Integer.parseInt(a.code.substring(3));
 			assetKeys.put(keyId, a);
 		}
 		
@@ -538,12 +552,17 @@ public class Driver {
 				//Subquery for assetPortfolio
 				ConnectionManager cm = new ConnectionManager();
 				Connection conn = cm.getConnection();
-				String query = "";
+				String query = "SELECT ap.number, ap.assetId "
+						+ "FROM AssetPortfolio ap "
+						+ "LEFT JOIN Asset a ON a.assetId = ap.assetId "
+						+ "WHERE ap.portfolioId = ?";
 				PreparedStatement ps = cm.prepareStatement(conn, query);
+				//System.out.println(rs.getInt("portfolioId"));
+				ps.setInt(1, rs.getInt("portfolioId"));
 				ResultSet rs2 = ps.executeQuery();
 				
 				while (rs2.next()){
-					assetMap.put(assetKeys.get(rs2.getInt("assetId")), (Double)rs2.getDouble("number"));
+					assetMap.put(assetKeys.get(rs2.getInt("ap.assetId")), (Double)rs2.getDouble("ap.number"));
 				}
 				cm.closeAll(conn, ps, rs2);
 				
