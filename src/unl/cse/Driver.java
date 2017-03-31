@@ -10,6 +10,8 @@ package unl.cse;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -370,7 +372,7 @@ public class Driver {
 		String firstName;
 		String lastName;
 		Address address;
-		ArrayList<String> emails;
+		ArrayList<String> emails = new ArrayList<String>();
 		String secID;
 		BrokerType type;
 		
@@ -381,7 +383,29 @@ public class Driver {
 				code = "PS" + Integer.toString(rs.getInt("personId"));
 				firstName = rs.getString("firstName");
 				lastName = rs.getString("lastName");
-				//TODO: Address and emails. Subquery?
+				
+				ConnectionManager cm = new ConnectionManager();
+				Connection conn = cm.getConnection();
+				String query = "";
+				PreparedStatement ps = cm.prepareStatement(conn, query);
+				ResultSet rs2 = ps.executeQuery();
+				
+				while (rs2.next()){
+					emails.add(rs2.getString("e.address"));
+				}
+				
+				query = "";
+				ps = cm.prepareStatement(conn, query);
+				rs2 = ps.executeQuery();
+				
+				rs2.next();
+				String streetAddress = rs2.getString("address");
+				String zipCode = rs2.getString("a.zipCode");
+				String city = rs2.getString("a.city");
+				String state = rs2.getString("s.name");
+				String country = rs2.getString("c.name");
+				
+				address = new Address(streetAddress, city, state, zipCode, country);
 				
 				if (rs.getString("secId") != null){
 					secID = rs.getString("secId");
@@ -390,7 +414,9 @@ public class Driver {
 					} else {
 						type = BrokerType.JUNIOR;
 					}
-				persons.add(new Broker(code, lastName, firstName, address, emails, secID, type));
+					persons.add(new Broker(code, lastName, firstName, address, emails, secID, type));
+				} else {
+					persons.add(new Person(code, lastName, firstName, address, emails));
 				}
 			}
 		} catch (SQLException e) {
@@ -442,6 +468,64 @@ public class Driver {
 		}
 		
 		return assets;
+	}
+	
+	public static ArrayList<Portfolio> readPortfolios (ResultSet rs, ArrayList<Person> persons, ArrayList<Asset> assets){
+		String code;
+		Integer ownerId;
+		Integer brokerId;
+		Integer beneficiaryId;
+		Person owner;
+		Person broker;
+		Person beneficiary = null;
+		Integer keyId;
+		Integer assetId;
+		Map<Asset, Double> assetMap = new HashMap<Asset, Double>();
+		
+		Map<Integer, Person> personKeys = new HashMap<Integer, Person>();
+		for (Person p : persons){
+			keyId = Integer.parseInt(p.code.substring(2));
+			personKeys.put(keyId, p);
+		}
+		
+		Map<Integer, Asset> assetKeys = new HashMap<Integer, Asset>();
+		for (Asset a : assets){
+			keyId = Integer.parseInt(a.code.substring(2));
+			assetKeys.put(keyId, a);
+		}
+		
+		ArrayList<Portfolio> portfolios = new ArrayList<Portfolio>();
+		try {
+			while (rs.next()){
+				code = "PRT" + Integer.toString(rs.getInt("portfolioId"));
+				ownerId = rs.getInt("ownerId");
+				brokerId = rs.getInt("brokerId");
+				beneficiaryId = rs.getInt("beneficiaryId");
+				owner = personKeys.get(ownerId);
+				broker = personKeys.get(brokerId);
+				
+				if (beneficiaryId != null){
+					beneficiary = personKeys.get(beneficiaryId);
+				}
+				//Subquery for assetPortfolio
+				ConnectionManager cm = new ConnectionManager();
+				Connection conn = cm.getConnection();
+				String query = "";
+				PreparedStatement ps = cm.prepareStatement(conn, query);
+				ResultSet rs2 = ps.executeQuery();
+				
+				while (rs2.next()){
+					assetMap.put(assetKeys.get(rs2.getInt("assetId")), (Double)rs2.getDouble("number"));
+				}
+				cm.closeAll(conn, ps, rs2);
+				
+				portfolios.add(new Portfolio(code, owner, broker, beneficiary, assetMap));
+			}
+		} catch (SQLException e) {
+			// TODO LOG ERROR
+			e.printStackTrace();
+		}
+		return portfolios;
 	}
 	
 }

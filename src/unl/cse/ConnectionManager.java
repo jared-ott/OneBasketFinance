@@ -41,6 +41,18 @@ public class ConnectionManager {
 		return conn;
 	}
 	
+	public PreparedStatement prepareStatement(Connection conn, String query){
+		PreparedStatement ps = null;
+		
+		try {
+			ps = conn.prepareStatement(query);
+		} catch (SQLException e) {
+			// TODO LOG ERROR
+			e.printStackTrace();
+		}
+		return ps;
+	}
+	
 	public ResultSet getObjects(PreparedStatement ps){
 		ResultSet rs = null;
 		try {
