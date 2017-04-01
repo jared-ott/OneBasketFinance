@@ -395,19 +395,18 @@ public class Driver {
 	}
 	
 	//rs is a left join from Person to BrokerStatus
-	public static ArrayList<Person> readPersons(ResultSet rs){
-		String code;
-		String firstName;
-		String lastName;
-		Address address;
-		ArrayList<String> emails = new ArrayList<String>();
-		String secID;
-		BrokerType type;
-		
+	public static ArrayList<Person> readPersons(ResultSet rs){	
 		ArrayList<Person> persons = new ArrayList<Person>();
 		
 		try {
 			while (rs.next()){
+				String code;
+				String firstName;
+				String lastName;
+				Address address;
+				ArrayList<String> emails = new ArrayList<String>();
+				String secID;
+				BrokerType type;
 				code = "PS" + Integer.toString(rs.getInt("p.personId"));
 				firstName = rs.getString("p.firstName");
 				lastName = rs.getString("p.lastName");
@@ -460,7 +459,6 @@ public class Driver {
 				} else {
 					persons.add(new Person(code, lastName, firstName, address, emails));
 				}
-				
 			}
 		} catch (SQLException e) {
 			//TODO LOG ERROR
@@ -470,20 +468,20 @@ public class Driver {
 	}
 	
 	public static ArrayList<Asset> readAssets(ResultSet rs){
-		String label;
-		String code;
-		String type;
-		double apr;
-		double quarterlyDividend;
-		double baseRateOfReturn;
-		double risk;
-		String stockSymbol;
-		double sharePrice;
-		double value;
-		
 		ArrayList<Asset> assets = new ArrayList<Asset>();
+		
 		try {
 			while (rs.next()){
+				String label;
+				String code;
+				String type;
+				double apr;
+				double quarterlyDividend;
+				double baseRateOfReturn;
+				double risk;
+				String stockSymbol;
+				double sharePrice;
+				double value;
 				code = "AST" + Integer.toString(rs.getInt("assetId"));
 				label = rs.getString("label");
 				type = rs.getString("assetType");
@@ -513,17 +511,7 @@ public class Driver {
 	}
 	
 	public static ArrayList<Portfolio> readPortfolios (ResultSet rs, ArrayList<Person> persons, ArrayList<Asset> assets){
-		String code;
-		Integer ownerId;
-		Integer brokerId;
-		Integer beneficiaryId;
-		Person owner;
-		Person broker;
-		Person beneficiary = null;
 		Integer keyId;
-		Integer assetId;
-		Map<Asset, Double> assetMap = new HashMap<Asset, Double>();
-		
 		Map<Integer, Person> personKeys = new HashMap<Integer, Person>();
 		for (Person p : persons){
 			keyId = Integer.parseInt(p.code.substring(2));
@@ -539,6 +527,15 @@ public class Driver {
 		ArrayList<Portfolio> portfolios = new ArrayList<Portfolio>();
 		try {
 			while (rs.next()){
+				String code;
+				Integer ownerId;
+				Integer brokerId;
+				Integer beneficiaryId;
+				Person owner;
+				Person broker;
+				Person beneficiary = null;
+				Integer assetId;
+				Map<Asset, Double> assetMap = new HashMap<Asset, Double>();
 				code = "PRT" + Integer.toString(rs.getInt("portfolioId"));
 				ownerId = rs.getInt("ownerId");
 				brokerId = rs.getInt("brokerId");
@@ -562,6 +559,7 @@ public class Driver {
 				ResultSet rs2 = ps.executeQuery();
 				
 				while (rs2.next()){
+					System.out.println(rs2.getInt("ap.assetId"));
 					assetMap.put(assetKeys.get(rs2.getInt("ap.assetId")), (Double)rs2.getDouble("ap.number"));
 				}
 				cm.closeAll(conn, ps, rs2);
