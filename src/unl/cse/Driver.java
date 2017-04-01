@@ -384,7 +384,7 @@ public class Driver {
 			s = new Scanner(f);
 			
 		} catch (FileNotFoundException fnfe) {
-			fnfe.printStackTrace();
+			logger.warning("YA DONE GOOFED " + fnfe.getMessage());
 		}
 		
 		while(s.hasNext()) {
@@ -464,7 +464,7 @@ public class Driver {
 			}
 		} catch (SQLException e) {
 			//TODO LOG ERROR
-			e.printStackTrace();
+			logger.warning("YA DONE GOOFED " + e.getMessage());
 		}
 		return persons;
 	}
@@ -507,7 +507,7 @@ public class Driver {
 			}
 		} catch (SQLException e) {
 			// TODO LOG ERROR
-			e.printStackTrace();
+			logger.warning("YA DONE GOOFED " + e.getMessage());
 		}
 		return assets;
 	}
@@ -569,7 +569,7 @@ public class Driver {
 			}
 		} catch (SQLException e) {
 			// TODO LOG ERROR
-			e.printStackTrace();
+			logger.warning("YA DONE GOOFED " + e.getMessage());
 		}
 		return portfolios;
 	}
