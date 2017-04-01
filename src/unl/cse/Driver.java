@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.logging.Logger;
+
+import org.apache.log4j.Level;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,6 +29,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 public class Driver {
 	// Main driver
+	public final static Logger logger = Logger.getLogger("Reporter");
 	public static void main(String args[]) {
 //		ArrayList<String> personsList = processFile("data/Persons.dat");
 //		ArrayList<String> assetsList = processFile("data/Assets.dat");
@@ -127,8 +131,7 @@ public class Driver {
 			pw.println(output);
 			pw.close();
 		} catch (JsonProcessingException | FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warning("JSON PROCESSING EXCEPTION" + "\n" + e.getStackTrace());
 		}
 		return;
 	}
@@ -290,8 +293,7 @@ public class Driver {
 			pw.println(output);
 			pw.close();
 		} catch (JsonProcessingException | FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warning("JSON PROCESSING EXCEPTION" + e.getMessage());
 		}
 
 		return;
@@ -559,7 +561,6 @@ public class Driver {
 				ResultSet rs2 = ps.executeQuery();
 				
 				while (rs2.next()){
-					System.out.println(rs2.getInt("ap.assetId"));
 					assetMap.put(assetKeys.get(rs2.getInt("ap.assetId")), (Double)rs2.getDouble("ap.number"));
 				}
 				cm.closeAll(conn, ps, rs2);

@@ -6,8 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ConnectionManager {
+import com.sun.media.jfxmedia.logging.Logger;
 
+public class ConnectionManager {
 	public Connection getConnection(){
 		String url = "jdbc:mysql://cse.unl.edu/rwallace";
 		String u = "rwallace";
@@ -17,15 +18,15 @@ public class ConnectionManager {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 		} catch (InstantiationException e) {
 			System.out.println("InstantiationException: ");
-			e.printStackTrace();
+			Driver.logger.warning("YA DONE GOOFED " + e.getMessage());
 			throw new RuntimeException(e);
 		} catch (IllegalAccessException e) {
 			System.out.println("IllegalAccessException: ");
-			e.printStackTrace();
+			Driver.logger.warning("YA DONE GOOFED " + e.getMessage());
 			throw new RuntimeException(e);
 		} catch (ClassNotFoundException e) {
 			System.out.println("ClassNotFoundException: ");
-			e.printStackTrace();
+			Driver.logger.warning("YA DONE GOOFED " + e.getMessage());
 			throw new RuntimeException(e);
 		}
 		
@@ -35,7 +36,7 @@ public class ConnectionManager {
 			conn = DriverManager.getConnection(url, u, p);
 		} catch (SQLException e){
 			//TODO: LOG ERROR
-			e.printStackTrace();
+			Driver.logger.warning("YA DONE GOOFED " + e.getMessage());
 		}
 		
 		return conn;
@@ -47,8 +48,7 @@ public class ConnectionManager {
 		try {
 			ps = conn.prepareStatement(query);
 		} catch (SQLException e) {
-			// TODO LOG ERROR
-			e.printStackTrace();
+			Driver.logger.warning("YA DONE GOOFED " + e.getMessage());
 		}
 		return ps;
 	}
@@ -59,7 +59,7 @@ public class ConnectionManager {
 			rs = ps.executeQuery();
 		} catch (SQLException e) {
 			// TODO LOG ERROR
-			e.printStackTrace();
+			Driver.logger.warning("YA DONE GOOFED " + e.getMessage());
 		}
 		return rs;
 	}
@@ -81,7 +81,7 @@ public class ConnectionManager {
 			}
 		} catch (SQLException e){
 			//TODO: LOG ERROR
-			e.printStackTrace();
+			Driver.logger.warning("YA DONE GOOFED " + e.getMessage());
 		}
 	}
 
