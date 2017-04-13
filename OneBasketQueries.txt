@@ -1,12 +1,10 @@
-SELECT brokerType,
-       secId,
-       personId
-	FROM BrokerStatus;
-
-SELECT personId,
-	  lastName,
-       firstName
-	FROM Person;
+SELECT p.personId,
+	   p.lastName,
+       p.firstName,
+	   b.secId,
+	   b.brokerType
+	FROM Person p
+	LEFT JOIN BrokerStatus b on b.personId = p.personId;
     
 SELECT a.streetAddress,
        a.zipCode,
