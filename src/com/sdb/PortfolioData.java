@@ -22,6 +22,7 @@ public class PortfolioData {
 	public static void removeAllPersons() {
 		removeAllPortfolios();
 		removeAllPersonEmail();
+		removeAllBrokerStatus();
 		ConnectionManager cm = new ConnectionManager();
 		Connection conn = cm.getConnection();
 		String query = "DELETE FROM Person";
@@ -92,10 +93,23 @@ public class PortfolioData {
 		removePortfolioPerson(resultArr.get(1));
 		updateBeneficiary(resultArr.get(2));
 		
-		query = "DELETE FROM PersonEmail WHERE personId = " + personId;
+		query = "DELETE FROM PersonEmail WHERE personId = ?";
 		ps = cm.prepareStatement(conn, query);
 		
 		try {
+			ps.setInt(1, personId);
+			ps.executeUpdate();
+		} catch (SQLException e){
+			Driver.logger.warning("Update failed: " + e.getMessage());
+			cm.closeAll(conn, ps, rs);
+			return;
+		}
+		
+		query = "DELETE FROM BrokerStatus WHERE personId = ?";
+		ps = cm.prepareStatement(conn, query);
+		
+		try {
+			ps.setInt(1, personId);
 			ps.executeUpdate();
 		} catch (SQLException e){
 			Driver.logger.warning("Update failed: " + e.getMessage());
@@ -303,7 +317,7 @@ public class PortfolioData {
 			ps.setString(1, email);
 			rs = cm.getObjects(ps);
 			if (!rs.next()){
-				query = "INSERT INTO email (address) VALUES ?";
+				query = "INSERT INTO Email (address) VALUES ?";
 				ps = cm.prepareStatement(conn, query);
 				ps.setString(1, email);
 				ps.executeUpdate();
@@ -447,12 +461,12 @@ public class PortfolioData {
 			rs = cm.getObjects(ps);
 			
 			if (!rs.next()){
-				query = "INSERT INTO Asset (assetCode, label, apr, assetType) VALUES ?, ?, ?, ?";
+				query = "INSERT INTO Asset (assetType, assetCode, apr, label) VALUES ?, ?, ?, ?";
 				ps = cm.prepareStatement(conn, query);
-				ps.setString(1, assetCode);
-				ps.setString(2, label);
+				ps.setString(1, "D");
+				ps.setString(2, assetCode);
 				ps.setDouble(3, apr);
-				ps.setString(4, "D");
+				ps.setString(4, label);
 				ps.executeUpdate();
 			} else {
 				Driver.logger.warning("Update failed: Record already exists.");
@@ -497,16 +511,16 @@ public class PortfolioData {
 			rs = cm.getObjects(ps);
 			
 			if (!rs.next()){
-				query = "INSERT INTO Asset (assetCode, label, quarterlyDividend, baseRateOfReturn, risk, value, assetType) VALUES ?, ?, ?, ?, ?, ?, ?";
+				query = "INSERT INTO Asset (assetType, assetCode, label, quarterlyDividend, rateOfReturn, risk, `value`) VALUES ?, ?, ?, ?, ?, ?, ?";
 				ps = cm.prepareStatement(conn, query);
 				
-				ps.setString(1, assetCode);
-				ps.setString(2, label);
-				ps.setDouble(3, quarterlyDividend);
-				ps.setDouble(4, baseRateOfReturn);
-				ps.setDouble(5, baseOmega);
-				ps.setDouble(6, totalValue);
-				ps.setString(7, String.valueOf("P"));
+				ps.setString(1, String.valueOf("P"));
+				ps.setString(2, assetCode);
+				ps.setString(3, label);
+				ps.setDouble(4, quarterlyDividend);
+				ps.setDouble(5, baseRateOfReturn);
+				ps.setDouble(6, baseOmega);
+				ps.setDouble(7, totalValue);
 				ps.executeUpdate();
 			} else {
 				Driver.logger.warning("Update failed: Record already exists.");
@@ -818,6 +832,22 @@ public class PortfolioData {
 	}
 	
 	public static void removeAllPersonEmail(){
+		ConnectionManager cm = new ConnectionManager();
+		Connection conn = cm.getConnection();
+		String query = "DELETE FROM PersonEmail";
+		PreparedStatement ps = cm.prepareStatement(conn, query);
+		
+		try {
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			Driver.logger.warning("Update failed: " + e.getMessage());
+			cm.closeAll(conn, ps);
+			return;
+		}
+		cm.closeAll(conn, ps);
+	}
+	
+	public static void removeAllBrokerStatus(){
 		ConnectionManager cm = new ConnectionManager();
 		Connection conn = cm.getConnection();
 		String query = "DELETE FROM PersonEmail";
