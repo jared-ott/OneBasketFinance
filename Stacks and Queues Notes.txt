@@ -128,3 +128,8 @@ Trees
 					Q.enq(x -> rightChild)
 					process x
 				Q.enq(root)
+				
+		Heap: A Binary Search Tree that is
+			1. Full: All nodes present except last row
+			2. All nodes full to the left in last row
+			3. For each node, it's key value is greater than both of it's children
