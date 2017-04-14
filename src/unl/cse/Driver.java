@@ -464,7 +464,6 @@ public class Driver {
 				}
 			}
 		} catch (SQLException e) {
-			//TODO LOG ERROR
 			logger.warning("YA DONE GOOFED " + e.getMessage());
 		}
 		return persons;
@@ -507,7 +506,6 @@ public class Driver {
 				}
 			}
 		} catch (SQLException e) {
-			// TODO LOG ERROR
 			logger.warning("YA DONE GOOFED " + e.getMessage());
 		}
 		return assets;
@@ -569,7 +567,6 @@ public class Driver {
 				portfolios.add(new Portfolio(code, owner, broker, beneficiary, assetMap));
 			}
 		} catch (SQLException e) {
-			// TODO LOG ERROR
 			logger.warning("YA DONE GOOFED " + e.getMessage());
 		}
 		return portfolios;

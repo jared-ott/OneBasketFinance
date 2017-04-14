@@ -35,7 +35,6 @@ public class ConnectionManager {
 		try { 
 			conn = DriverManager.getConnection(url, u, p);
 		} catch (SQLException e){
-			//TODO: LOG ERROR
 			Driver.logger.warning("YA DONE GOOFED " + e.getMessage());
 		}
 		
@@ -58,7 +57,6 @@ public class ConnectionManager {
 		try {
 			rs = ps.executeQuery();
 		} catch (SQLException e) {
-			// TODO LOG ERROR
 			Driver.logger.warning("YA DONE GOOFED " + e.getMessage());
 		}
 		return rs;
@@ -80,9 +78,12 @@ public class ConnectionManager {
 				rs.close();
 			}
 		} catch (SQLException e){
-			//TODO: LOG ERROR
 			Driver.logger.warning("YA DONE GOOFED " + e.getMessage());
 		}
 	}
-
+	
+	public void closeAll(ResultSet rs){
+		this.closeAll(null, null, rs);
+	}
+	
 }
