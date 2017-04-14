@@ -51,7 +51,7 @@ public class Driver {
 		PreparedStatement ps;
 		ResultSet rs;
 		
-		query = "SELECT p.personId, p.lastName, p.firstName, p.addressId, b.secId, b.brokerType " 
+		query = "SELECT p.personId, p.personCode, p.lastName, p.firstName, p.addressId, b.secId, b.brokerType " 
 				+ "FROM Person p "
 				+ "LEFT JOIN BrokerStatus b ON b.personId = p.personId";
 		
@@ -59,14 +59,14 @@ public class Driver {
 		rs = cm.getObjects(ps);
 		ArrayList<Person> persons = readPersons(rs);
 		
-		query = "SELECT assetId, assetType, apr, label, "
+		query = "SELECT assetId, assetCode, assetType, apr, label, "
 				+ "quarterlyDividend, rateOfReturn, risk, symbol, `value` "
 				+ "FROM Asset";
 		ps = cm.prepareStatement(conn, query);
 		rs = cm.getObjects(ps);
 		ArrayList<Asset> assets = readAssets(rs);
 		
-		query = "SELECT portfolioId, ownerId, brokerId, beneficiaryId "
+		query = "SELECT portfolioId, portfolioCode, ownerId, brokerId, beneficiaryId "
 				+ "FROM Portfolio";
 		ps = cm.prepareStatement(conn, query);
 		rs = cm.getObjects(ps);
@@ -74,6 +74,7 @@ public class Driver {
 		
 		cm.closeAll(conn, ps, rs);
 		printSummary(portfolios);
+
 		
 	}
 	
@@ -410,7 +411,7 @@ public class Driver {
 				ArrayList<String> emails = new ArrayList<String>();
 				String secID;
 				BrokerType type;
-				code = "PS" + Integer.toString(rs.getInt("p.personId"));
+				code = rs.getString("p.personCode");
 				firstName = rs.getString("p.firstName");
 				lastName = rs.getString("p.lastName");
 				
@@ -484,7 +485,7 @@ public class Driver {
 				String stockSymbol;
 				double sharePrice;
 				double value;
-				code = "AST" + Integer.toString(rs.getInt("assetId"));
+				code = rs.getString("assetCode");
 				label = rs.getString("label");
 				type = rs.getString("assetType");
 				
@@ -537,7 +538,7 @@ public class Driver {
 				Person beneficiary = null;
 				Integer assetId;
 				Map<Asset, Double> assetMap = new HashMap<Asset, Double>();
-				code = "PRT" + Integer.toString(rs.getInt("portfolioId"));
+				code = rs.getString("portfolioId");
 				ownerId = rs.getInt("ownerId");
 				brokerId = rs.getInt("brokerId");
 				beneficiaryId = rs.getInt("beneficiaryId");

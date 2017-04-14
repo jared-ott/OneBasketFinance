@@ -21,6 +21,7 @@ public class PortfolioData {
 	 */
 	public static void removeAllPersons() {
 		removeAllPortfolios();
+		removeAllPersonEmail();
 		ConnectionManager cm = new ConnectionManager();
 		Connection conn = cm.getConnection();
 		String query = "DELETE FROM Person";
@@ -148,6 +149,12 @@ public class PortfolioData {
 
 	public static void addPerson(String personCode, String firstName, String lastName, String street, 
 			String city, String state, String zip, String country, String brokerType, String secBrokerId) {
+	
+		if (personCode == null || lastName == null || city == null || street == null){
+			Driver.logger.warning("Update failed: non-nullable values entered into parameters.");
+			return;
+		}
+		
 		ConnectionManager cm = new ConnectionManager();
 		Connection conn = cm.getConnection();
 		String query = "SELECT FROM Person WHERE personCode = ?";
@@ -281,6 +288,10 @@ public class PortfolioData {
 	 */
 	
 	public static void addEmail(String personCode, String email) {
+		if(personCode == null || email == null){
+			Driver.logger.warning("Update failed: non-nullable values entered as parameters.");
+			return;
+		}
 		ConnectionManager cm = new ConnectionManager();
 		Connection conn = cm.getConnection();
 		String query = "SELECT emailId FROM Email WHERE address = ?";
@@ -419,6 +430,12 @@ public class PortfolioData {
 	 * @param apr
 	 */
 	public static void addDepositAccount(String assetCode, String label, double apr) {
+		
+		if (assetCode == null || label == null){
+			Driver.logger.warning("Update failed: non-nullable values entered as parameters.");
+			return;
+		}
+		
 		ConnectionManager cm = new ConnectionManager();
 		Connection conn = cm.getConnection();
 		String query = "SELECT assetCode FROM Asset WHERE assetCode = ?";
@@ -464,6 +481,12 @@ public class PortfolioData {
 	 */
 	public static void addPrivateInvestment(String assetCode, String label, Double quarterlyDividend, 
 			Double baseRateOfReturn, Double baseOmega, Double totalValue) {
+		
+		if (assetCode == null || label == null){
+			Driver.logger.warning("Update failed: non-nullable values entered as parameters.");
+			return;
+		}
+		
 		ConnectionManager cm = new ConnectionManager();
 		Connection conn = cm.getConnection();
 		String query = "SELECT assetCode FROM Asset WHERE assetCode = ?";
@@ -483,7 +506,7 @@ public class PortfolioData {
 				ps.setDouble(4, baseRateOfReturn);
 				ps.setDouble(5, baseOmega);
 				ps.setDouble(6, totalValue);
-				ps.setString(7, "P");
+				ps.setString(7, String.valueOf("P"));
 				ps.executeUpdate();
 			} else {
 				Driver.logger.warning("Update failed: Record already exists.");
@@ -513,6 +536,12 @@ public class PortfolioData {
 	 */
 	public static void addStock(String assetCode, String label, Double quarterlyDividend, 
 			Double baseRateOfReturn, Double beta, String stockSymbol, Double sharePrice) {
+		
+		if (assetCode == null || label == null){
+			Driver.logger.warning("Update failed: non-nullable values entered as parameters.");
+			return;
+		}
+		
 		ConnectionManager cm = new ConnectionManager();
 		Connection conn = cm.getConnection();
 		String query = "SELECT assetCode FROM Asset WHERE assetCode = ?";
@@ -616,6 +645,12 @@ public class PortfolioData {
 	 * @param beneficiaryCode
 	 */
 	public static void addPortfolio(String portfolioCode, String ownerCode, String managerCode, String beneficiaryCode) {
+		
+		if(portfolioCode == null || ownerCode == null || managerCode == null){
+			Driver.logger.warning("Update failed: non-nullable values entered as parameters.");
+			return;
+		}
+		
 		ConnectionManager cm = new ConnectionManager();
 		Connection conn = cm.getConnection();
 		PreparedStatement ps;
@@ -684,6 +719,12 @@ public class PortfolioData {
 	 */
 	
 	public static void addAsset(String portfolioCode, String assetCode, double value) {
+		
+		if (portfolioCode == null || assetCode == null || value < 0){
+			Driver.logger.warning("Update failed: non-nullable values entered as parameters.");
+			return;
+		}
+		
 		ConnectionManager cm = new ConnectionManager();
 		Connection conn = cm.getConnection();
 		String query = "SELECT assetId FROM Asset WHERE assetCode = " + assetCode;
@@ -764,6 +805,22 @@ public class PortfolioData {
 		ConnectionManager cm = new ConnectionManager();
 		Connection conn = cm.getConnection();
 		String query = "DELETE FROM AssetPortfolio";
+		PreparedStatement ps = cm.prepareStatement(conn, query);
+		
+		try {
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			Driver.logger.warning("Update failed: " + e.getMessage());
+			cm.closeAll(conn, ps);
+			return;
+		}
+		cm.closeAll(conn, ps);
+	}
+	
+	public static void removeAllPersonEmail(){
+		ConnectionManager cm = new ConnectionManager();
+		Connection conn = cm.getConnection();
+		String query = "DELETE FROM PersonEmail";
 		PreparedStatement ps = cm.prepareStatement(conn, query);
 		
 		try {
