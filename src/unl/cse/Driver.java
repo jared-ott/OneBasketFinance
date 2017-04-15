@@ -44,6 +44,8 @@ public class Driver {
 //		createXML(assets, "asset");
 //		createJSON(persons, "persons");
 //		createJSON(assets, "assets");
+		PortfolioData pd = new PortfolioData();
+		pd.addPerson("0001S", "Jimmy", "Fallon", "Park Lane", "NY", "Arizona", "63573-S", "Jaaapan", null, null);
 		
 		ConnectionManager cm = new ConnectionManager();
 		Connection conn = cm.getConnection();
@@ -66,8 +68,11 @@ public class Driver {
 		rs = cm.getObjects(ps);
 		ArrayList<Asset> assets = readAssets(rs);
 		
-		query = "SELECT portfolioId, portfolioCode, ownerId, brokerId, beneficiaryId "
-				+ "FROM Portfolio";
+		query = "SELECT p.portfolioId, p.title, o.personCode, m.personCode, b.personCode "
+				+ "FROM Portfolio p "
+				+ "LEFT JOIN Person o ON o.personId = p.ownerId "
+				+ "LEFT JOIN Person m ON m.personId = p.brokerId "
+				+ "LEFT JOIN Person b ON b.personId = p.beneficiaryId";
 		ps = cm.prepareStatement(conn, query);
 		rs = cm.getObjects(ps);
 		ArrayList<Portfolio> portfolios = readPortfolios(rs, persons, assets);
@@ -513,16 +518,16 @@ public class Driver {
 	}
 	
 	public static ArrayList<Portfolio> readPortfolios (ResultSet rs, ArrayList<Person> persons, ArrayList<Asset> assets){
-		Integer keyId;
-		Map<Integer, Person> personKeys = new HashMap<Integer, Person>();
+		String keyId;
+		Map<String, Person> personKeys = new HashMap<String, Person>();
 		for (Person p : persons){
-			keyId = Integer.parseInt(p.code.substring(2));
+			keyId = (p.code);
 			personKeys.put(keyId, p);
 		}
 		
-		Map<Integer, Asset> assetKeys = new HashMap<Integer, Asset>();
+		Map<String, Asset> assetKeys = new HashMap<String, Asset>();
 		for (Asset a : assets){
-			keyId = Integer.parseInt(a.code.substring(3));
+			keyId = (a.code);
 			assetKeys.put(keyId, a);
 		}
 		
@@ -530,18 +535,18 @@ public class Driver {
 		try {
 			while (rs.next()){
 				String code;
-				Integer ownerId;
-				Integer brokerId;
-				Integer beneficiaryId;
+				String ownerId;
+				String brokerId;
+				String beneficiaryId;
 				Person owner;
 				Person broker;
 				Person beneficiary = null;
 				Integer assetId;
 				Map<Asset, Double> assetMap = new HashMap<Asset, Double>();
-				code = rs.getString("portfolioId");
-				ownerId = rs.getInt("ownerId");
-				brokerId = rs.getInt("brokerId");
-				beneficiaryId = rs.getInt("beneficiaryId");
+				code = rs.getString("p.title");
+				ownerId = rs.getString("o.personCode");
+				brokerId = rs.getString("m.personCode");
+				beneficiaryId = rs.getString("b.personCode");
 				owner = personKeys.get(ownerId);
 				broker = personKeys.get(brokerId);
 				
@@ -551,7 +556,7 @@ public class Driver {
 				//Subquery for assetPortfolio
 				ConnectionManager cm = new ConnectionManager();
 				Connection conn = cm.getConnection();
-				String query = "SELECT ap.number, ap.assetId "
+				String query = "SELECT ap.number, a.assetCode "
 						+ "FROM AssetPortfolio ap "
 						+ "LEFT JOIN Asset a ON a.assetId = ap.assetId "
 						+ "WHERE ap.portfolioId = ?";
@@ -561,7 +566,7 @@ public class Driver {
 				ResultSet rs2 = ps.executeQuery();
 				
 				while (rs2.next()){
-					assetMap.put(assetKeys.get(rs2.getInt("ap.assetId")), (Double)rs2.getDouble("ap.number"));
+					assetMap.put(assetKeys.get(rs2.getString("a.assetCode")), (Double)rs2.getDouble("ap.number"));
 				}
 				cm.closeAll(conn, ps, rs2);
 				

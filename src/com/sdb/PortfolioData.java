@@ -171,7 +171,7 @@ public class PortfolioData {
 		
 		ConnectionManager cm = new ConnectionManager();
 		Connection conn = cm.getConnection();
-		String query = "SELECT FROM Person WHERE personCode = ?";
+		String query = "SELECT personId FROM Person WHERE personCode = ?";
 		PreparedStatement ps = cm.prepareStatement(conn, query);
 		ResultSet rs = null;
 		
@@ -180,44 +180,44 @@ public class PortfolioData {
 		
 		try{
 			ps.setString(1, personCode);
-			rs = cm.getObjects(ps);
+			rs = ps.executeQuery();
 			if (!rs.next()){
-				query = "INSERT INTO Person (personCode, lastName, firstName, addressId) VALUES ?, ?, ?, ?";
+				query = "INSERT INTO Person (personCode, lastName, firstName, addressId) VALUES (?, ?, ?, ?)";
 				ps = cm.prepareStatement(conn, query);
 				ps.setString(1, personCode);
 				ps.setString(2, lastName);
 				ps.setString(3, firstName);
 				ps.setInt(4, addressId);
 				ps.executeUpdate();
-				rs = ps.getGeneratedKeys();
+				ps = cm.prepareStatement(conn, "SELECT LAST_INSERT_ID()");
+				rs = ps.executeQuery();
+				rs.next();
+				personId = rs.getInt("LAST_INSERT_ID()");
 			} else {
-				Driver.logger.warning("Update failed: Record already exists.");
+				personId = rs.getInt("personId");
 			}
-			personId = rs.getInt("personId");
 		} catch (Exception e){
-			Driver.logger.warning("Update failed: " + e.getMessage());
+			Driver.logger.warning("Update failed: " + e.getMessage() + " LINE 198");
 		}
 		
 		if(brokerType != null) {
-			query = "SELECT FROM BrokerStatus WHERE personId = ?";
+			query = "SELECT brokerId FROM BrokerStatus WHERE personId = ?";
 			ps = cm.prepareStatement(conn, query);
 			try{
 				ps.setInt(1, personId);
 				rs = cm.getObjects(ps);
 				if (!rs.next()){
-					query = "INSERT INTO BrokerStatus (brokerType,secId,personId) VALUES ?, ?, ?";
+					query = "INSERT INTO BrokerStatus (brokerType,secId,personId) VALUES (?, ?, ?)";
 					ps = cm.prepareStatement(conn, query);
 					ps.setString(1, brokerType);
 					ps.setString(2, secBrokerId);
 					ps.setInt(3, personId);
 					ps.executeUpdate();
-					rs = ps.getGeneratedKeys();
 				} else {
 					Driver.logger.warning("Update failed: Record already exists.");
 				}
-				personId = rs.getInt("personId");
 			} catch (Exception e){
-				Driver.logger.warning("Update failed: " + e.getMessage());
+				Driver.logger.warning("Update failed: " + e.getMessage() + " LINE 220");
 			}
 		}
 		cm.closeAll(conn, ps, rs);
@@ -227,7 +227,7 @@ public class PortfolioData {
 	private static int getAddressId(String street, String city, String state, String zip, String country) {
 		ConnectionManager cm = new ConnectionManager();
 		Connection conn = cm.getConnection();
-		String query = "SELECT countryId FROM Country WHERE name = ?";
+		String query = "SELECT countryId FROM Country WHERE `name` = ?";
 		PreparedStatement ps = cm.prepareStatement(conn, query);
 		ResultSet rs = null;
 		int countryId = 0;
@@ -236,18 +236,23 @@ public class PortfolioData {
 			ps.setString(1, country);
 			rs = cm.getObjects(ps);
 			if (!rs.next()){
-				query = "INSERT INTO Country (name) VALUES ?";
+				System.out.println(rs.toString());
+				query = "INSERT INTO Country (`name`) VALUES (?)";
 				ps = cm.prepareStatement(conn, query);
 				ps.setString(1, country);
 				ps.executeUpdate();
-				rs = ps.getGeneratedKeys();
+				ps = cm.prepareStatement(conn, "SELECT LAST_INSERT_ID()");
+				rs = ps.executeQuery();
+				rs.next();
+				countryId = rs.getInt("LAST_INSERT_ID()");
+			} else {
+				countryId = rs.getInt("countryId");
 			}
-			countryId = rs.getInt("countryId");
 		} catch (Exception e){
-			Driver.logger.warning("Update failed: " + e.getMessage());
+			Driver.logger.warning("Update failed: " + e.getMessage() + " LINE 249");
 		}
 		
-		query = "SELECT stateId FROM State WHERE name = ? AND countryId = ?";
+		query = "SELECT stateId FROM State WHERE `name` = ? AND countryId = ?";
 		ps = cm.prepareStatement(conn, query);
 		int stateId = 0;
 		try{
@@ -255,16 +260,20 @@ public class PortfolioData {
 			ps.setInt(2, countryId);
 			rs = cm.getObjects(ps);
 			if (!rs.next()){
-				query = "INSERT INTO State (name, countryId) VALUES ?, ?";
+				query = "INSERT INTO State (`name`, countryId) VALUES (?, ?)";
 				ps = cm.prepareStatement(conn, query);
-				ps.setString(1, country);
+				ps.setString(1, state);
 				ps.setInt(2, countryId);
 				ps.executeUpdate();
-				rs = ps.getGeneratedKeys();
+				ps = cm.prepareStatement(conn, "SELECT LAST_INSERT_ID()");
+				rs = ps.executeQuery();
+				rs.next();
+				stateId = rs.getInt("LAST_INSERT_ID()");
+			} else {
+				stateId = rs.getInt("stateId");
 			}
-			stateId = rs.getInt("stateId");
 		} catch (Exception e){
-			Driver.logger.warning("Update failed: " + e.getMessage());
+			Driver.logger.warning("Update failed: " + e.getMessage() + " LINE 272");
 		}
 		
 		query = "SELECT addressId FROM Address WHERE zipCode = ? AND streetAddress = ? AND city = ? AND stateId = ?";
@@ -277,18 +286,22 @@ public class PortfolioData {
 			ps.setInt(4, stateId);
 			rs = cm.getObjects(ps);
 			if (!rs.next()){
-				query = "INSERT INTO Address (zipCode,streetAddress,city,stateId) VALUES ?, ?, ?, ?";
+				query = "INSERT INTO Address (zipCode, streetAddress, city, stateId) VALUES (?, ?, ?, ?)";
 				ps = cm.prepareStatement(conn, query);
 				ps.setString(1, zip);
 				ps.setString(2, street);
 				ps.setString(3, city);
 				ps.setInt(4, stateId);
 				ps.executeUpdate();
-				rs = ps.getGeneratedKeys();
+				ps = cm.prepareStatement(conn, "SELECT LAST_INSERT_ID()");
+				rs = ps.executeQuery();
+				rs.next();
+				addressId = rs.getInt("LAST_INSERT_ID()");
+			} else {
+				addressId = rs.getInt("addressId");
 			}
-			addressId = rs.getInt("addressId");
 		} catch (Exception e){
-			Driver.logger.warning("Update failed: " + e.getMessage());
+			Driver.logger.warning("Update failed: " + e.getMessage() + " LINE 296");
 		}
 		cm.closeAll(conn, ps, rs);
 		return addressId;
@@ -317,26 +330,32 @@ public class PortfolioData {
 			ps.setString(1, email);
 			rs = cm.getObjects(ps);
 			if (!rs.next()){
-				query = "INSERT INTO Email (address) VALUES ?";
+				query = "INSERT INTO Email (address) VALUES (?)";
 				ps = cm.prepareStatement(conn, query);
 				ps.setString(1, email);
 				ps.executeUpdate();
-				rs = ps.getGeneratedKeys();
-			} 
-			emailId = rs.getInt("emailId");
+				ps = cm.prepareStatement(conn, "SELECT LAST_INSERT_ID()");
+				rs = ps.executeQuery();
+				rs.next();
+				emailId = rs.getInt("LAST_INSERT_ID()");
+			} else {
+				emailId = rs.getInt("emailId");
+			}
 		} catch (Exception e){
 			Driver.logger.warning("Update failed: " + e.getMessage());
 		}
 		
 		query = "SELECT personEmailId FROM PersonEmail WHERE personId = "
 				+ "(SELECT personId FROM Person WHERE personCode = ?) AND emailId = ?";
+		ps = cm.prepareStatement(conn, query);
+		
 		try{
 			ps.setString(1, personCode);
 			ps.setInt(2, emailId);
 			rs = cm.getObjects(ps);
 			if (!rs.next()){
 				query = "INSERT INTO PersonEmail (personId, emailId) VALUES "
-						+ "(SELECT personId FROM Person WHERE personCode = ?), ?";
+						+ "((SELECT personId FROM Person WHERE personCode = ?), ?)";
 				ps = cm.prepareStatement(conn, query);
 				ps.setString(1, personCode);
 				ps.setInt(2, emailId);
@@ -461,7 +480,7 @@ public class PortfolioData {
 			rs = cm.getObjects(ps);
 			
 			if (!rs.next()){
-				query = "INSERT INTO Asset (assetType, assetCode, apr, label) VALUES ?, ?, ?, ?";
+				query = "INSERT INTO Asset (assetType, assetCode, apr, label) VALUES (?, ?, ?, ?)";
 				ps = cm.prepareStatement(conn, query);
 				ps.setString(1, "D");
 				ps.setString(2, assetCode);
@@ -511,7 +530,7 @@ public class PortfolioData {
 			rs = cm.getObjects(ps);
 			
 			if (!rs.next()){
-				query = "INSERT INTO Asset (assetType, assetCode, label, quarterlyDividend, rateOfReturn, risk, `value`) VALUES ?, ?, ?, ?, ?, ?, ?";
+				query = "INSERT INTO Asset (assetType, assetCode, label, quarterlyDividend, rateOfReturn, risk, `value`) VALUES (?, ?, ?, ?, ?, ?, ?)";
 				ps = cm.prepareStatement(conn, query);
 				
 				ps.setString(1, String.valueOf("P"));
@@ -566,7 +585,7 @@ public class PortfolioData {
 			ps.setString(1, assetCode);
 			rs = cm.getObjects(ps);
 			if (!rs.next()){
-				query = "INSERT INTO Asset (assetCode, label, quarterlyDividend, baseRateOfReturn, risk, symbol, price, assetType) VALUES ?, ?, ?, ?, ?, ?, ?, ?";
+				query = "INSERT INTO Asset (assetCode, label, quarterlyDividend, rateOfReturn, risk, symbol, `value`, assetType) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 				ps = cm.prepareStatement(conn, query);
 				
 				ps.setString(1, assetCode);
@@ -671,7 +690,7 @@ public class PortfolioData {
 		ResultSet rs;
 		String query;
 		String[] personCodes = {ownerCode, managerCode, beneficiaryCode};
-		int[] personIds = new int[3];
+		Integer[] personIds = new Integer[3];
 		
 		for (int i = 0 ; i < 3 ; i++){
 			query = "SELECT personId FROM Person WHERE personCode = ?";
@@ -682,40 +701,48 @@ public class PortfolioData {
 				rs = ps.executeQuery();
 				if (rs.next()){
 					personIds[i] = rs.getInt("personId");
-				} else {
+				} else if (i != 2){
 					Driver.logger.warning("Update failed: Person " + personCodes[i] + " does not exist.");
 					cm.closeAll(conn, ps, rs);
 					return;
+				} else if (i == 2){
+					personIds[i] = null;
 				}
 			} catch (SQLException e){
-				Driver.logger.warning("Update failed: " + e.getMessage());
+				Driver.logger.warning("Update failed: Loop Value: " + i + e.getMessage() + " LINE 710");
 				cm.closeAll(conn, ps);
 				return;
 			}
 		}
 		
-		query = "SELECT * FROM Portfolio WHERE portfolioCode = ?";
+		query = "SELECT portfolioId FROM Portfolio WHERE title = ?";
 		ps = cm.prepareStatement(conn, query);
 		try {
 			ps.setString(1, portfolioCode);
 			rs = cm.getObjects(ps);
 			
 			if(!rs.next()){
-				query = "INSERT INTO Portfolio (portfolioCode, ownerId, brokerId, beneficiaryId) "
-						+ "VALUES ?, ?, ?, ?";
+				if (personIds[2] != null){
+					query = "INSERT INTO Portfolio (title, ownerId, brokerId, beneficiaryId) "
+						+ "VALUES (?, ?, ?, ?)";
+				} else {
+					query = "INSERT INTO Portfolio (title, ownerId, brokerId, beneficiaryId) "
+							+ "VALUES (?, ?, ?, null)";
+				}
+					ps = cm.prepareStatement(conn, query);
 				
-				ps = cm.prepareStatement(conn, query);
-				
-				ps.setString(1, portfolioCode);
-				ps.setInt(2, personIds[0]);
-				ps.setInt(3, personIds[1]);
-				ps.setInt(4, personIds[2]);	
+					ps.setString(1, portfolioCode);
+					ps.setInt(2, personIds[0]);
+					ps.setInt(3, personIds[1]);
+				if (personIds[2] != null){
+					ps.setInt(4, personIds[2]);
+				} 
 				ps.executeUpdate();
 			} else {
 				Driver.logger.warning("Update failed: Record already exists.");
 			}
 		} catch (Exception e) {
-			Driver.logger.warning("Update failed: " + e.getMessage());
+			Driver.logger.warning("Update failed: " + e.getMessage() + " LINE 737");
 		}
 		
 		cm.closeAll(conn, ps);
@@ -741,12 +768,13 @@ public class PortfolioData {
 		
 		ConnectionManager cm = new ConnectionManager();
 		Connection conn = cm.getConnection();
-		String query = "SELECT assetId FROM Asset WHERE assetCode = " + assetCode;
+		String query = "SELECT assetId FROM Asset WHERE assetCode = ?";
 		PreparedStatement ps = cm.prepareStatement(conn, query);
 		ResultSet rs = null;
 		int assetId = -1;
 		
 		try {
+			ps.setString(1, assetCode);
 			rs = ps.executeQuery();
 			if (rs.next()){
 				assetId = rs.getInt("assetId");
@@ -756,12 +784,33 @@ public class PortfolioData {
 				return;
 			}
 		} catch (SQLException e){
-			Driver.logger.warning("Update failed: " + e.getMessage());
+			Driver.logger.warning("Update failed: " + e.getMessage() + " LINE 779");
 			cm.closeAll(conn, ps, rs);
 			return;
 		}
 		
-		query = "INSERT INTO AssetPortfolio (portfolioCode, assetId, number) VALUES ?, ?, ?";
+		query = "SELECT portfolioId FROM Portfolio WHERE title = ?";
+		ps = cm.prepareStatement(conn, query);
+		int portfolioId = -1;
+		
+		try {
+			ps.setString(1, portfolioCode);
+			rs = ps.executeQuery();
+			if (rs.next()){
+				portfolioId = rs.getInt("portfolioId");
+			} else {
+				Driver.logger.warning("Update failed: Portfolio does not exist");
+				cm.closeAll(conn, ps, rs);
+				return;
+			}
+		} catch (SQLException e){
+			Driver.logger.warning("Update failed: " + e.getMessage() + " LINE 779");
+			cm.closeAll(conn, ps, rs);
+			return;
+		}
+		
+		query = "INSERT INTO AssetPortfolio (portfolioId, assetId, number) VALUES "
+				+ "((SELECT portfolioId FROM Portfolio WHERE title = ?), ?, ?)";
 		ps = cm.prepareStatement(conn, query);
 		
 		try{
@@ -770,7 +819,7 @@ public class PortfolioData {
 			ps.setDouble(3, value);
 			ps.executeUpdate();	
 		} catch (Exception e){
-			Driver.logger.warning("Update failed: " + e.getMessage());
+			Driver.logger.warning("Update failed: " + e.getMessage() + " LINE 794");
 			cm.closeAll(conn, ps, rs);
 			return;
 		}
@@ -782,7 +831,7 @@ public class PortfolioData {
 	public static void updateBeneficiary(ResultSet rs){
 		ConnectionManager cm = new ConnectionManager();
 		Connection conn = cm.getConnection();
-		String query = "UPDATE Portfolio SET beneficiary = null WHERE portfolioCode = ?";
+		String query = "UPDATE Portfolio SET beneficiary = null WHERE title = ?";
 		PreparedStatement ps = cm.prepareStatement(conn, query);
 		
 		try {
@@ -850,7 +899,7 @@ public class PortfolioData {
 	public static void removeAllBrokerStatus(){
 		ConnectionManager cm = new ConnectionManager();
 		Connection conn = cm.getConnection();
-		String query = "DELETE FROM PersonEmail";
+		String query = "DELETE FROM BrokerStatus";
 		PreparedStatement ps = cm.prepareStatement(conn, query);
 		
 		try {

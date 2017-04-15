@@ -26,12 +26,12 @@ abstract class Asset {
 		String type = this.getType();
 		
 		if (type.equals("D")){
-			expectedReturn = number * ((DepositAccount)this).getRateOfReturn()/100;
+			expectedReturn = number * ((DepositAccount)this).getRateOfReturn();
 		} else if (type.equals("P")) {
-			expectedReturn = number/100 * (((PrivateInvestment)this).getRateOfReturn()/100 * ((PrivateInvestment)this).getTotalValue() 
+			expectedReturn = number * (((PrivateInvestment)this).getRateOfReturn() * ((PrivateInvestment)this).getTotalValue() 
 					+ 4 * ((PrivateInvestment)this).getQuarterlyDividend());
 		} else {
-			expectedReturn = number * (((Stock)this).getRateOfReturn()/100 * ((Stock)this).getSharePrice()
+			expectedReturn = number * (((Stock)this).getRateOfReturn() * ((Stock)this).getSharePrice()
 					+ 4 * ((Stock)this).getQuarterlyDividend());
 		}
 		
@@ -66,7 +66,7 @@ abstract class Asset {
 		if (type.equals("D")){
 			totalValue = number;
 		} else if (type.equals("P")) {
-			totalValue = number/100*((PrivateInvestment)this).getTotalValue();
+			totalValue = number*((PrivateInvestment)this).getTotalValue();
 		} else {
 			totalValue = ((Stock)this).getSharePrice() * number;
 		}
