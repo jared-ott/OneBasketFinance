@@ -21,7 +21,7 @@ public class DepositAccount extends Asset {
 	
 	@Override
 	public double getRateOfReturn(){
-		return 100*(Math.exp(this.apr/100) - 1);
+		return (Math.exp(this.apr) - 1);
 	}
 	
 }
