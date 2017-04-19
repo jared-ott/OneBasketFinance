@@ -6,14 +6,14 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/bob12/OneDrive/Classes Spring 2017/CSCE 156H/OneBasketFinance/lib/jackson-annotations-2.2.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/bob12/OneDrive/Classes Spring 2017/CSCE 156H/OneBasketFinance/lib/jackson-core-2.2.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/bob12/OneDrive/Classes Spring 2017/CSCE 156H/OneBasketFinance/lib/jackson-databind-2.8.6.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/bob12/OneDrive/Classes Spring 2017/CSCE 156H/OneBasketFinance/lib/jackson-dataformat-xml-2.7.5.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/bob12/OneDrive/Classes Spring 2017/CSCE 156H/OneBasketFinance/lib/jackson-module-jaxb-annotations-2.8.6.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/bob12/OneDrive/Classes Spring 2017/CSCE 156H/OneBasketFinance/lib/stax2-api-3.0.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/bob12/OneDrive/Classes Spring 2017/CSCE 156H/OneBasketFinance/lib/woodstox-core-asl-4.2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/mysql-connector-java-5.1.41-bin.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/log4j-1.2.17.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jackson-annotations-2.2.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jackson-core-2.2.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jackson-databind-2.8.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jackson-dataformat-xml-2.7.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jackson-module-jaxb-annotations-2.8.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/stax2-api-3.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/woodstox-core-asl-4.2.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

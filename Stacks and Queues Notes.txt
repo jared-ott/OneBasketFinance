@@ -132,4 +132,28 @@ Trees
 		Heap: A Binary Search Tree that is
 			1. Full: All nodes present except last row
 			2. All nodes full to the left in last row
-			3. For each node, it's key value is greater than both of it's children
+			3. For each node, it's key value is greater than both of it's children (max heap)
+			
+			Heap Insert
+				Insert at lowest level, as most left as possible
+				Iteratively swap with its parent if it is greater than the parent	
+					Stop when it is less than parent, or is the root
+					
+			Heap Remove
+				Insert lowest-right most element to where the remove was
+				Swap with children until it satisfies #3
+			
+		HeapSort
+			Input: A Collection "A"
+			Output: "A" Sorted
+			
+			H <- maxHeap
+			
+			foreach (a in A)
+				H.insert(a)
+				
+			for (i = n ... 1)
+				a_1 <- H.getMax
+				
+			output A
+		
