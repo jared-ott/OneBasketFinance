@@ -44,5 +44,12 @@ public class Broker extends Person {
 		return type;
 	}
 	
+	public String getStringType() {
+		if (this.type == BrokerType.EXPERT){
+			return "(E)";
+		}
+		return "(J)";
+	}
+	
 }
 

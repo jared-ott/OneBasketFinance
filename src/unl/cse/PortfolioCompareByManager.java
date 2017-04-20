@@ -11,9 +11,9 @@ public class PortfolioCompareByManager implements Comparator<Portfolio> {
 	public int compare(Portfolio p1, Portfolio p2) {
 		if(((Broker) p1.getManager()).getType() != ((Broker) p2.getManager()).getType()) {
 			if(((Broker) p1.getManager()).getType() == BrokerType.EXPERT) {
-				return 1;
-			} else {
 				return -1;
+			} else {
+				return 1;
 			}
 		}
 		

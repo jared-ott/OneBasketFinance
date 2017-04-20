@@ -86,13 +86,14 @@ public class Driver {
 		}
 		
 		System.out.println("Sorted By Owner: ");
-		printSummary(portfolioOwnerSort);
+		printShortSummary(portfolioOwnerSort);
 		
-		System.out.println("\n \n Sorted By Value: ");
-		printSummary(portfolioValueSort);
+		System.out.println("\n \nSorted By Value: ");
+		printShortSummary(portfolioValueSort);
 		
-		System.out.println("\n \n Sorted By Manager: ");
-		printSummary(portfolioManagerSort);
+		System.out.println("\n \nSorted By Manager: ");
+		printShortSummary(portfolioManagerSort);
+		
 //		MyList<Integer> list = new MyList<Integer>(new IntegerComparator());
 //		for (Integer i = 0 ; i < 201 ; i+=2){
 //			list.add(i);
@@ -340,8 +341,7 @@ public class Driver {
 		return null;
 	}
 	
-	//Function prints the portfolio summary given an MyList of portfolios
-	public static void printSummary(MyList<Portfolio> portfolioList){
+	public static void printShortSummary(MyList<Portfolio> portfolioList){
 		String title1 = "Portfolio";
 		String title2 = "Owner";
 		String title3 = "Manager";
@@ -362,13 +362,13 @@ public class Driver {
 			System.out.print("=");
 		}
 		
-		System.out.printf("\n%-10s %-25s %-25s %15s %15s %15s %15s %15s\n",
+		System.out.printf("\n%-10s %-25s %-25s %18s %15s %15s %15s %15s\n",
 				title1, title2, title3, title4, title5, title6, title7, title8);
 		
 		//Foreach loop that prints out the basic info for each portfolio
 		for (Portfolio p : portfolioList){
 			MyList<Object> info = p.getBasicInfo();
-			System.out.printf("%-10s %-25s %-25s $%14.2f $%14.2f %15.4f $%14.2f $%14.2f\n",
+			System.out.printf("%-10s %-25s %-25s" + ((Broker)info.get(2)).getStringType() + " $%14.2f $%14.2f %15.4f $%14.2f $%14.2f\n",
 				(String)info.get(0), ((Person)info.get(1)).getNameStringLF(), ((Person)info.get(2)).getNameStringLF(), (Double)info.get(3),
 				(Double)info.get(4), (Double)info.get(5), (Double)info.get(6), (Double)info.get(7));
 			
@@ -383,10 +383,16 @@ public class Driver {
 			System.out.print("-");
 		}
 		
-		System.out.printf("\n%62s $%14.2f $%14.2f %15s $%14.2f $%14.2f\n ", 
+		System.out.printf("\n%65s $%14.2f $%14.2f %15s $%14.2f $%14.2f\n ", 
 				"Totals:", totalFees, totalCommissions, "", totalReturn, totalTotal);
-		System.out.println("\n\n\nPortfolio Details");
 		
+	}
+	
+	//Function prints the portfolio summary given an MyList of portfolios
+	public static void printSummary(MyList<Portfolio> portfolioList){
+		
+		printShortSummary(portfolioList);
+		System.out.println("\n\n\nPortfolio Details");
 		for (int i = 1 ; i <= 150 ; i++){
 			System.out.print("=");
 		}
