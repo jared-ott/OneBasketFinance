@@ -2,7 +2,7 @@ package unl.cse;
 
 import java.util.Iterator;
 
-public class MyList<T> implements Iterable {
+public class MyList<T> implements Iterable <T>{
 	private int capacity;
 	private T myArray[];
 	private int size;
