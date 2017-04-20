@@ -35,8 +35,16 @@ public class Portfolio {
 		} catch (Exception e) {
 			this.fees = 0;
 		}
-	}
+	}	
 	
+	public double getTotalValue() {
+		return totalValue;
+	}
+
+	public Person getManager() {
+		return manager;
+	}
+
 	//Calculates basic info for the portfolio
 	private void calculateAssetInfo(Map<Asset, Double> assetMap){
 		this.aggregateRisk = 0;

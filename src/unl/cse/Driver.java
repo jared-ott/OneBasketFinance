@@ -44,43 +44,49 @@ public class Driver {
 //		createXML(assets, "asset");
 //		createJSON(persons, "persons");
 //		createJSON(assets, "assets");
-		PortfolioData pd = new PortfolioData();
-		pd.addPerson("0001S", "Jimmy", "Fallon", "Park Lane", "NY", "Arizona", "63573-S", "Jaaapan", null, null);
 		
-		ConnectionManager cm = new ConnectionManager();
-		Connection conn = cm.getConnection();
-		String query;
-		PreparedStatement ps;
-		ResultSet rs;
-		
-		query = "SELECT p.personId, p.personCode, p.lastName, p.firstName, p.addressId, b.secId, b.brokerType " 
-				+ "FROM Person p "
-				+ "LEFT JOIN BrokerStatus b ON b.personId = p.personId";
-		
-		ps = cm.prepareStatement(conn, query);
-		rs = cm.getObjects(ps);
-		ArrayList<Person> persons = readPersons(rs);
-		
-		query = "SELECT assetId, assetCode, assetType, apr, label, "
-				+ "quarterlyDividend, rateOfReturn, risk, symbol, `value` "
-				+ "FROM Asset";
-		ps = cm.prepareStatement(conn, query);
-		rs = cm.getObjects(ps);
-		ArrayList<Asset> assets = readAssets(rs);
-		
-		query = "SELECT p.portfolioId, p.title, o.personCode, m.personCode, b.personCode "
-				+ "FROM Portfolio p "
-				+ "LEFT JOIN Person o ON o.personId = p.ownerId "
-				+ "LEFT JOIN Person m ON m.personId = p.brokerId "
-				+ "LEFT JOIN Person b ON b.personId = p.beneficiaryId";
-		ps = cm.prepareStatement(conn, query);
-		rs = cm.getObjects(ps);
-		ArrayList<Portfolio> portfolios = readPortfolios(rs, persons, assets);
-		
-		cm.closeAll(conn, ps, rs);
-		printSummary(portfolios);
+//		ConnectionManager cm = new ConnectionManager();
+//		Connection conn = cm.getConnection();
+//		String query;
+//		PreparedStatement ps;
+//		ResultSet rs;
+//		
+//		query = "SELECT p.personId, p.personCode, p.lastName, p.firstName, p.addressId, b.secId, b.brokerType " 
+//				+ "FROM Person p "
+//				+ "LEFT JOIN BrokerStatus b ON b.personId = p.personId";
+//		
+//		ps = cm.prepareStatement(conn, query);
+//		rs = cm.getObjects(ps);
+//		ArrayList<Person> persons = readPersons(rs);
+//		
+//		query = "SELECT assetId, assetCode, assetType, apr, label, "
+//				+ "quarterlyDividend, rateOfReturn, risk, symbol, `value` "
+//				+ "FROM Asset";
+//		ps = cm.prepareStatement(conn, query);
+//		rs = cm.getObjects(ps);
+//		ArrayList<Asset> assets = readAssets(rs);
+//		
+//		query = "SELECT p.portfolioId, p.title, o.personCode, m.personCode, b.personCode "
+//				+ "FROM Portfolio p "
+//				+ "LEFT JOIN Person o ON o.personId = p.ownerId "
+//				+ "LEFT JOIN Person m ON m.personId = p.brokerId "
+//				+ "LEFT JOIN Person b ON b.personId = p.beneficiaryId";
+//		ps = cm.prepareStatement(conn, query);
+//		rs = cm.getObjects(ps);
+//		ArrayList<Portfolio> portfolios = readPortfolios(rs, persons, assets);
+//		
+//		cm.closeAll(conn, ps, rs);
+//		printSummary(portfolios);
 
+		MyList<Integer> list = new MyList<Integer>();
 		
+		for (Integer i = 0 ; i < 201 ; i++){
+			list.add(i);
+		}
+		
+		for (Integer x : list){
+			
+		}
 	}
 	
 	//Creates all assets from the Assets.dat file
