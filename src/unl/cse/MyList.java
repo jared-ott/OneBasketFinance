@@ -7,6 +7,7 @@ public class MyList<T> implements Iterable <T>{
 	private int capacity;
 	private T myArray[];
 	private int size;
+	private Comparator<T> c = null;
 	
 	public MyList() {
 		this.myArray = (T[]) new Object[64];
@@ -18,6 +19,7 @@ public class MyList<T> implements Iterable <T>{
 		this.myArray = (T[]) new Object[64];
 		this.capacity = 64;
 		this.size = 0;
+		this.c = c;
 	}
 	
 	private MyList(int capacity){
@@ -28,19 +30,22 @@ public class MyList<T> implements Iterable <T>{
 
 	//Check
 	public T get(int index) {
-		if(index < 0 || index >= size) 
-			//TODO: LOG ERROR
-			throw new IllegalArgumentException("index = " + index + " is out of bounds");
-		else
+		if(index < 0 || index >= size) {
+			Driver.logger.warning("Get failed: Illegal index");
+			return null;
+		} else {
 			return this.myArray[index];
+		}
 	}
 	
 	//Check
 	public void remove(int index) {
 
-		if(index < 0 || index >= size) 
-			//TODO: LOG ERROR
-			throw new IllegalArgumentException("index = "+index+" is out of bounds");
+		if(index < 0 || index >= size) {
+			Driver.logger.warning("Remove failed: Illegal index");
+			return;
+		}
+		
 		for(int i=index; i<size-1; i++) {
 			this.myArray[i] = this.myArray[i+1];
 		}
@@ -60,17 +65,46 @@ public class MyList<T> implements Iterable <T>{
 	
 	public void add(T element) {
 
+		if (this.size == 0){
+			myArray[0] = element;
+			this.size++;
+			return;
+		}
+		
 		if(size == capacity) {
 			//resize
 			T tmp[] = (T[]) new Object[capacity * 2];
 			capacity *= 2;
+			
 			for(int i=0; i<myArray.length; i++) {
 				tmp[i] = myArray[i];
 			}
+			
 			this.myArray = tmp;
 		}
-
-		this.myArray[size] = element;
+		
+		boolean flag = false;
+				
+		if (c != null) {
+			
+			for (int i = 0 ; i < this.size ; i++){
+				if (c.compare(element, myArray[i]) <= 0){
+					flag = true;
+					
+					for (int j = this.size ; j > i ; j--){
+						myArray[j] = myArray[j - 1];
+					}
+					
+					myArray[i] = element;
+					break;
+				} 
+			}
+		}
+		
+		if (flag == false){
+			this.myArray[size] = element;
+		}
+		
 		this.size++;
 	}
 	
@@ -79,7 +113,10 @@ public class MyList<T> implements Iterable <T>{
 	}
 	
 	public boolean isEmpty() {
-		return (size == 0) ? true : false;
+		if(size == 0){
+			return true;
+		}
+		return false;
 	}
 
 	@Override
