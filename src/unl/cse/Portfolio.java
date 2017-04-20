@@ -1,6 +1,5 @@
 package unl.cse;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,8 +81,8 @@ public class Portfolio {
 	}
 	
 	//Returns the basicInfo of each portfolio
-	public ArrayList<Object> getBasicInfo(){
-		ArrayList<Object> list = new ArrayList<Object>();
+	public MyList<Object> getBasicInfo(){
+		MyList<Object> list = new MyList<Object>();
 		
 		list.add(this.portfolioCode);
 		list.add(this.owner);

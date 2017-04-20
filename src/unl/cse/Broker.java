@@ -1,14 +1,12 @@
 
 package unl.cse; 
 
-import java.util.ArrayList;
-
 public class Broker extends Person {
 
 	private String secID;
 	private BrokerType type;
 	
-	public Broker(String code, String lastName, String firstName, Address address, ArrayList<String> emails,
+	public Broker(String code, String lastName, String firstName, Address address, MyList<String> emails,
 			String secID, BrokerType type) {
 		super(code, lastName, firstName, address, emails);
 		this.secID = secID;

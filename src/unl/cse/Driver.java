@@ -14,7 +14,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -32,13 +31,13 @@ public class Driver {
 	// Main driver
 	public final static Logger logger = Logger.getLogger("Reporter");
 	public static void main(String args[]) {
-//		ArrayList<String> personsList = processFile("data/Persons.dat");
-//		ArrayList<String> assetsList = processFile("data/Assets.dat");
-//		ArrayList<String> portfoliosList = processFile("data/Portfolios.dat");
+//		MyList<String> personsList = processFile("data/Persons.dat");
+//		MyList<String> assetsList = processFile("data/Assets.dat");
+//		MyList<String> portfoliosList = processFile("data/Portfolios.dat");
 //		
-//		ArrayList<Person> persons = createPersons(personsList);	
-//		ArrayList<Asset> assets = createAssets(assetsList);
-//		ArrayList<Portfolio> portfolios = createPortfolios(portfoliosList, persons, assets);
+//		MyList<Person> persons = createPersons(personsList);	
+//		MyList<Asset> assets = createAssets(assetsList);
+//		MyList<Portfolio> portfolios = createPortfolios(portfoliosList, persons, assets);
 //		
 //		createXML(persons, "person");
 //		createXML(assets, "asset");
@@ -57,14 +56,14 @@ public class Driver {
 //		
 //		ps = cm.prepareStatement(conn, query);
 //		rs = cm.getObjects(ps);
-//		ArrayList<Person> persons = readPersons(rs);
+//		MyList<Person> persons = readPersons(rs);
 //		
 //		query = "SELECT assetId, assetCode, assetType, apr, label, "
 //				+ "quarterlyDividend, rateOfReturn, risk, symbol, `value` "
 //				+ "FROM Asset";
 //		ps = cm.prepareStatement(conn, query);
 //		rs = cm.getObjects(ps);
-//		ArrayList<Asset> assets = readAssets(rs);
+//		MyList<Asset> assets = readAssets(rs);
 //		
 //		query = "SELECT p.portfolioId, p.title, o.personCode, m.personCode, b.personCode "
 //				+ "FROM Portfolio p "
@@ -73,27 +72,27 @@ public class Driver {
 //				+ "LEFT JOIN Person b ON b.personId = p.beneficiaryId";
 //		ps = cm.prepareStatement(conn, query);
 //		rs = cm.getObjects(ps);
-//		ArrayList<Portfolio> portfolios = readPortfolios(rs, persons, assets);
+//		MyList<Portfolio> portfolios = readPortfolios(rs, persons, assets);
 //		
 //		cm.closeAll(conn, ps, rs);
 //		printSummary(portfolios);
 
 		MyList<Integer> list = new MyList<Integer>();
 		
-		for (Integer i = 0 ; i < 201 ; i++){
+		for (Integer i = 0 ; i < 1 ; i++){
 			list.add(i);
 		}
 		
 		for (Integer x : list){
-			
+			System.out.println(x);
 		}
 	}
 	
 	//Creates all assets from the Assets.dat file
-	public static ArrayList<Asset> createAssets(ArrayList<String> list) {
+	public static MyList<Asset> createAssets(MyList<String> list) {
 		int lines = Integer.parseInt(list.get(0));
 		
-		ArrayList<Asset> assets = new ArrayList<Asset>();
+		MyList<Asset> assets = new MyList<Asset>();
 		String line = "";
 		for(int i=1; i<=lines; i++) {
 			line = list.get(i);
@@ -135,7 +134,7 @@ public class Driver {
 	}
 
 	// Takes List of objects (assets or persons) and user-desired name of the class and turns into JSON formatted string
-	public static void createJSON(ArrayList<Object> list, String className) {
+	public static void createJSON(MyList<Object> list, String className) {
 		ObjectMapper mapper = new ObjectMapper();
 		String output = "{\n\"" + className + "\": ";
 		try {
@@ -150,7 +149,7 @@ public class Driver {
 	}
 	
 	//Function creates an assetMap for each individual portfolio
-	public static Map<Asset, Double> createMap(String assetInfo, ArrayList<Asset> allAssets) {
+	public static Map<Asset, Double> createMap(String assetInfo, MyList<Asset> allAssets) {
 		Map<Asset, Double> assetMap = new HashMap<Asset, Double>();
 		String [] assetTokens = assetInfo.split(",");
 		
@@ -187,11 +186,11 @@ public class Driver {
 		return assetMap;
 	}
 	
-	//Function creates an ArrayList of Persons from the lines of the Persons.dat file
-	public static ArrayList<Person> createPersons(ArrayList<String> list) {
+	//Function creates an MyList of Persons from the lines of the Persons.dat file
+	public static MyList<Person> createPersons(MyList<String> list) {
 		int lines = Integer.parseInt(list.get(0));
 		
-		ArrayList<Person> persons = new ArrayList<Person>();
+		MyList<Person> persons = new MyList<Person>();
 		String line = "";
 		for(int i=1; i<=lines; i++) {
 			line = list.get(i);
@@ -206,7 +205,7 @@ public class Driver {
 				String addressTokens[] = tokens[3].split(",");
 				Address address = new Address(addressTokens[0], addressTokens[1], addressTokens[2]
 						, addressTokens[3], addressTokens[4]);				
-				ArrayList<String> emails = new ArrayList<String>();
+				MyList<String> emails = new MyList<String>();
 				if(tokens.length == 5) {
 					String[] temp = tokens[4].split(",");
 					for(String email : temp) {
@@ -236,11 +235,11 @@ public class Driver {
 		return persons;
 	}
 	
-	//This function creates all portfolios, and returns an ArrayList of all the portfolios
-	public static ArrayList<Portfolio> createPortfolios(ArrayList<String> list, ArrayList<Person> allPersons, ArrayList<Asset> allAssets){
+	//This function creates all portfolios, and returns an MyList of all the portfolios
+	public static MyList<Portfolio> createPortfolios(MyList<String> list, MyList<Person> allPersons, MyList<Asset> allAssets){
 		int lines = Integer.parseInt(list.get(0));
 		
-		ArrayList<Portfolio> portfolios = new ArrayList<Portfolio>();
+		MyList<Portfolio> portfolios = new MyList<Portfolio>();
 		String line = "";
 		for(int i=1; i<=lines; i++) {
 			line = list.get(i);
@@ -292,11 +291,11 @@ public class Driver {
 	}
 	
 	// Takes List of objects (assets or persons) and user-desired name of the class and turns into XML formatted string
-	public static void createXML(ArrayList<Object> list, String className) {
+	public static void createXML(MyList<Object> list, String className) {
 		
 		ObjectMapper mapper = new XmlMapper();
 		String output = "<?xml version=\"1.0\" encoding = \"UTF-8\" ?>\n";
-		Map<String, ArrayList<Object>> map = new HashMap<String, ArrayList<Object>>();
+		Map<String, MyList<Object>> map = new HashMap<String, MyList<Object>>();
 		
 		map.put(className, list);
 		
@@ -312,8 +311,8 @@ public class Driver {
 		return;
 	}
 	
-	//Function takes a person code and the arrayList of persons and matches the code to the person
-	public static Person findPerson(ArrayList<Person> allPersons, String personCode){
+	//Function takes a person code and the MyList of persons and matches the code to the person
+	public static Person findPerson(MyList<Person> allPersons, String personCode){
 		for (Person p : allPersons){
 			if(p.getCode().equals(personCode)){
 				return p;
@@ -322,8 +321,8 @@ public class Driver {
 		return null;
 	}
 	
-	//Function prints the portfolio summary given an ArrayList of portfolios
-	public static void printSummary(ArrayList<Portfolio> portfolioList){
+	//Function prints the portfolio summary given an MyList of portfolios
+	public static void printSummary(MyList<Portfolio> portfolioList){
 		String title1 = "Portfolio";
 		String title2 = "Owner";
 		String title3 = "Manager";
@@ -345,6 +344,7 @@ public class Driver {
 		}
 		
 		PortfolioComparator c = new PortfolioComparator();
+		//TODO: Sort by what?
 		portfolioList.sort(c);
 		
 		System.out.printf("\n%-10s %-25s %-25s %15s %15s %15s %15s %15s\n",
@@ -352,7 +352,7 @@ public class Driver {
 		
 		//Foreach loop that prints out the basic info for each portfolio
 		for (Portfolio p : portfolioList){
-			ArrayList<Object> info = p.getBasicInfo();
+			MyList<Object> info = p.getBasicInfo();
 			System.out.printf("%-10s %-25s %-25s $%14.2f $%14.2f %15.4f $%14.2f $%14.2f\n",
 				(String)info.get(0), ((Person)info.get(1)).getNameStringLF(), ((Person)info.get(2)).getNameStringLF(), (Double)info.get(3),
 				(Double)info.get(4), (Double)info.get(5), (Double)info.get(6), (Double)info.get(7));
@@ -384,12 +384,12 @@ public class Driver {
 		
 	}
 	
-	// Stores and outputs each line of a file into Strings in an ArrayList
-	public static ArrayList<String> processFile(String filename) {
+	// Stores and outputs each line of a file into Strings in an MyList
+	public static MyList<String> processFile(String filename) {
 		
 		File f = new File(filename);
 		
-		ArrayList<String> output = new ArrayList<String>();
+		MyList<String> output = new MyList<String>();
 		
 		Scanner s = null;
 		
@@ -410,8 +410,8 @@ public class Driver {
 	}
 	
 	//rs is a left join from Person to BrokerStatus
-	public static ArrayList<Person> readPersons(ResultSet rs){	
-		ArrayList<Person> persons = new ArrayList<Person>();
+	public static MyList<Person> readPersons(ResultSet rs){	
+		MyList<Person> persons = new MyList<Person>();
 		
 		try {
 			while (rs.next()){
@@ -419,7 +419,7 @@ public class Driver {
 				String firstName;
 				String lastName;
 				Address address;
-				ArrayList<String> emails = new ArrayList<String>();
+				MyList<String> emails = new MyList<String>();
 				String secID;
 				BrokerType type;
 				code = rs.getString("p.personCode");
@@ -481,8 +481,8 @@ public class Driver {
 		return persons;
 	}
 	
-	public static ArrayList<Asset> readAssets(ResultSet rs){
-		ArrayList<Asset> assets = new ArrayList<Asset>();
+	public static MyList<Asset> readAssets(ResultSet rs){
+		MyList<Asset> assets = new MyList<Asset>();
 		
 		try {
 			while (rs.next()){
@@ -523,7 +523,7 @@ public class Driver {
 		return assets;
 	}
 	
-	public static ArrayList<Portfolio> readPortfolios (ResultSet rs, ArrayList<Person> persons, ArrayList<Asset> assets){
+	public static MyList<Portfolio> readPortfolios (ResultSet rs, MyList<Person> persons, MyList<Asset> assets){
 		String keyId;
 		Map<String, Person> personKeys = new HashMap<String, Person>();
 		for (Person p : persons){
@@ -537,7 +537,7 @@ public class Driver {
 			assetKeys.put(keyId, a);
 		}
 		
-		ArrayList<Portfolio> portfolios = new ArrayList<Portfolio>();
+		MyList<Portfolio> portfolios = new MyList<Portfolio>();
 		try {
 			while (rs.next()){
 				String code;

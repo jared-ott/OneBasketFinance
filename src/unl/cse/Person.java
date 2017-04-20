@@ -1,16 +1,14 @@
 package unl.cse; 
 
-import java.util.ArrayList;
-
 public class Person {
 	
 	protected String code;
 	protected String firstName;
 	protected String lastName;
 	protected Address address;
-	protected ArrayList<String> emails;
+	protected MyList<String> emails;
 	
-	public Person(String code, String lastName, String firstName, Address address, ArrayList<String> emails) {
+	public Person(String code, String lastName, String firstName, Address address, MyList<String> emails) {
 		super();
 		this.code = code;
 		this.firstName = firstName;
@@ -35,7 +33,7 @@ public class Person {
 		return address;
 	}
 
-	public ArrayList<String> getEmails() {
+	public MyList<String> getEmails() {
 		return emails;
 	}
 	

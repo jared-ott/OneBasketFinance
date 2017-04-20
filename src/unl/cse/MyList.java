@@ -1,5 +1,6 @@
 package unl.cse;
 
+import java.util.Comparator;
 import java.util.Iterator;
 
 public class MyList<T> implements Iterable <T>{
@@ -8,6 +9,12 @@ public class MyList<T> implements Iterable <T>{
 	private int size;
 	
 	public MyList() {
+		this.myArray = (T[]) new Object[64];
+		this.capacity = 64;
+		this.size = 0;
+	}
+	
+	public MyList(Comparator c) {
 		this.myArray = (T[]) new Object[64];
 		this.capacity = 64;
 		this.size = 0;
@@ -98,5 +105,4 @@ public class MyList<T> implements Iterable <T>{
 		};
 		return it;
 	}
-	
 }
