@@ -44,55 +44,55 @@ public class Driver {
 //		createJSON(persons, "persons");
 //		createJSON(assets, "assets");
 		
-		ConnectionManager cm = new ConnectionManager();
-		Connection conn = cm.getConnection();
-		String query;
-		PreparedStatement ps;
-		ResultSet rs;
+//		ConnectionManager cm = new ConnectionManager();
+//		Connection conn = cm.getConnection();
+//		String query;
+//		PreparedStatement ps;
+//		ResultSet rs;
+//		
+//		query = "SELECT p.personId, p.personCode, p.lastName, p.firstName, p.addressId, b.secId, b.brokerType " 
+//				+ "FROM Person p "
+//				+ "LEFT JOIN BrokerStatus b ON b.personId = p.personId";
+//		
+//		ps = cm.prepareStatement(conn, query);
+//		rs = cm.getObjects(ps);
+//		MyList<Person> persons = readPersons(rs);
+//		
+//		query = "SELECT assetId, assetCode, assetType, apr, label, "
+//				+ "quarterlyDividend, rateOfReturn, risk, symbol, `value` "
+//				+ "FROM Asset";
+//		ps = cm.prepareStatement(conn, query);
+//		rs = cm.getObjects(ps);
+//		MyList<Asset> assets = readAssets(rs);
+//		
+//		query = "SELECT p.portfolioId, p.title, o.personCode, m.personCode, b.personCode "
+//				+ "FROM Portfolio p "
+//				+ "LEFT JOIN Person o ON o.personId = p.ownerId "
+//				+ "LEFT JOIN Person m ON m.personId = p.brokerId "
+//				+ "LEFT JOIN Person b ON b.personId = p.beneficiaryId";
+//		ps = cm.prepareStatement(conn, query);
+//		rs = cm.getObjects(ps);
+//		MyList<Portfolio> portfolios = readPortfolios(rs, persons, assets);
+//		cm.closeAll(conn, ps, rs);
 		
-		query = "SELECT p.personId, p.personCode, p.lastName, p.firstName, p.addressId, b.secId, b.brokerType " 
-				+ "FROM Person p "
-				+ "LEFT JOIN BrokerStatus b ON b.personId = p.personId";
-		
-		ps = cm.prepareStatement(conn, query);
-		rs = cm.getObjects(ps);
-		MyList<Person> persons = readPersons(rs);
-		
-		query = "SELECT assetId, assetCode, assetType, apr, label, "
-				+ "quarterlyDividend, rateOfReturn, risk, symbol, `value` "
-				+ "FROM Asset";
-		ps = cm.prepareStatement(conn, query);
-		rs = cm.getObjects(ps);
-		MyList<Asset> assets = readAssets(rs);
-		
-		query = "SELECT p.portfolioId, p.title, o.personCode, m.personCode, b.personCode "
-				+ "FROM Portfolio p "
-				+ "LEFT JOIN Person o ON o.personId = p.ownerId "
-				+ "LEFT JOIN Person m ON m.personId = p.brokerId "
-				+ "LEFT JOIN Person b ON b.personId = p.beneficiaryId";
-		ps = cm.prepareStatement(conn, query);
-		rs = cm.getObjects(ps);
-		MyList<Portfolio> portfolios = readPortfolios(rs, persons, assets);
-		cm.closeAll(conn, ps, rs);
-		
-		MyList<Portfolio> portfolioOwnerSort = new MyList<Portfolio>(new PortfolioCompareByOwner());
-		MyList<Portfolio> portfolioValueSort = new MyList<Portfolio>(new PortfolioCompareByValue());
-		MyList<Portfolio> portfolioManagerSort = new MyList<Portfolio>(new PortfolioCompareByManager());
-		
-		for (Portfolio p : portfolios){
-			portfolioOwnerSort.add(p);
-			portfolioValueSort.add(p);
-			portfolioManagerSort.add(p);
-		}
-		
-		System.out.println("Sorted By Owner: ");
-		printShortSummary(portfolioOwnerSort);
-		
-		System.out.println("\n \nSorted By Value: ");
-		printShortSummary(portfolioValueSort);
-		
-		System.out.println("\n \nSorted By Manager: ");
-		printShortSummary(portfolioManagerSort);
+//		MyList<Portfolio> portfolioOwnerSort = new MyList<Portfolio>(new PortfolioCompareByOwner());
+//		MyList<Portfolio> portfolioValueSort = new MyList<Portfolio>(new PortfolioCompareByValue());
+//		MyList<Portfolio> portfolioManagerSort = new MyList<Portfolio>(new PortfolioCompareByManager());
+//		
+//		for (Portfolio p : portfolios){
+//			portfolioOwnerSort.add(p);
+//			portfolioValueSort.add(p);
+//			portfolioManagerSort.add(p);
+//		}
+//		
+//		System.out.println("Sorted By Owner: ");
+//		printShortSummary(portfolioOwnerSort);
+//		
+//		System.out.println("\n \nSorted By Value: ");
+//		printShortSummary(portfolioValueSort);
+//		
+//		System.out.println("\n \nSorted By Manager: ");
+//		printShortSummary(portfolioManagerSort);
 		
 //		MyList<Integer> list = new MyList<Integer>(new IntegerComparator());
 //		for (Integer i = 0 ; i < 201 ; i+=2){
@@ -106,6 +106,8 @@ public class Driver {
 //		for (Integer x : list){
 //			System.out.println(x);
 //		}
+		
+		
 	}
 	
 	//Creates all assets from the Assets.dat file
